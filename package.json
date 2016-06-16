@@ -46,7 +46,7 @@
     "eslint": "*.js",
     "stylelint": "*.css"
   },
-  "pre-commit": "lint:staged",
+  // "pre-commit": "lint:staged",
   "babel": {
     "presets": [
       "es2015-webpack",
