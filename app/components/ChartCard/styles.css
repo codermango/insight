@@ -1,0 +1,12 @@
+.chartCard {
+  background-color: rgba(39, 47, 57, .8);
+  padding: 1em;
+  border-radius: 5px;
+  margin: 2px;
+  display: inline-block;
+  height: 18em;
+}
+
+.body {
+  /*max-width: 500px;*/
+}

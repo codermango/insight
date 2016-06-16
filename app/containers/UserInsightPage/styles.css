@@ -1,0 +1,39 @@
+.userInsightPage {
+  position: relative;
+}
+
+.list {
+  /*padding-top: 1em;*/
+}
+
+.list_item {
+  display: inline-block;
+  list-style: none;
+  text-align: center;
+  width: 25%;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  cursor: pointer;
+}
+
+.list_item:hover {
+  background-color: #2f3c52;
+}
+
+.global_range_filter {
+  position: absolute;
+  right: 0;
+}
+
+.filter_style {
+  margin: 0 .3em;
+  font-size: .7em;
+  cursor: pointer;
+}
+.filter_style:hover {
+  text-decoration: underline;
+}
+
+.full_width_chart {
+  margin-top: 1.5em;
+}

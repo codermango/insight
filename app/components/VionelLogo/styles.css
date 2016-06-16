@@ -1,0 +1,11 @@
+.vionelLogoWrapper {
+  padding: .5em;
+  display: inline-block;
+  max-width: 120px;
+}
+
+.logo {
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+}
