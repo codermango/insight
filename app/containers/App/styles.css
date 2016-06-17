@@ -15,23 +15,20 @@ body.fontLoaded {
 }
 
 :global(#app) {
-  background-color: #2f3c52;
+  background-color: #2F3C52;
   background-image:
     radial-gradient(
       circle at top,
-      #4e5e6f,
+      #4E5E6F,
       #354656 50%,
-      #2f3c52
+      #2F3C52
     );
   min-height: 100%;
   min-width: 100%;
-  color: #fff;
+  color: #FFF;
 }
 
 .wrapper {
-  /*max-width: calc(768px + 16px * 2);*/
-  /*max-width: calc(768px - 200px);*/
-  /*margin: 0 auto;*/
   margin-left: 200px;
   display: flex;
   min-height: 100%;

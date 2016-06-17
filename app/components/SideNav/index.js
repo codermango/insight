@@ -11,7 +11,7 @@ import styles from './styles.css';
 
 import VionelLogo from 'components/VionelLogo';
 
-class SideNav extends React.Component {
+class SideNav extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div className={styles.sideNav}>

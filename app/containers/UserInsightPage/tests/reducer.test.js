@@ -4,6 +4,11 @@ import { fromJS } from 'immutable';
 
 describe('userInsightPageReducer', () => {
   it('returns the initial state', () => {
-    expect(userInsightPageReducer(undefined, {})).toEqual(fromJS({}));
+    const initial = {
+      loading: false,
+      contentViews: false,
+      error: false,
+    };
+    expect(userInsightPageReducer(undefined, {})).toEqual(fromJS(initial));
   });
 });

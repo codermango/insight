@@ -7,20 +7,45 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
-import selectUserInsightPage from './selectors';
+
+import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
+
+import { fetchContentViews } from './actions';
+import {
+  selectContentViews,
+  selectLoading,
+  selectError,
+} from './selectors';
 
 import ChartCard from 'components/ChartCard';
 
 export class UserInsightPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
+  static propTypes = {
+    fetchContentViews: React.PropTypes.func,
+    loading: React.PropTypes.bool,
+    error: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.bool,
+    ]),
+    contentViews: React.PropTypes.oneOfType([
+      React.PropTypes.array,
+      React.PropTypes.bool,
+    ]),
+  }
+
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      containerWidth: 0
-    }
+      containerWidth: 0,
+    };
 
     this.resize = this.resize.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.fetchContentViews();
   }
 
   componentDidMount() {
@@ -29,14 +54,14 @@ export class UserInsightPage extends React.Component { // eslint-disable-line re
   }
 
   componentWillUnmount() {
-    console.log("will unmount");
+    // console.log("will unmount");
     window.removeEventListener('resize', this.resize, false);
   }
 
   resize() {
-    let width = ReactDOM.findDOMNode(this).offsetWidth;
-    console.log("width1: ",width);
-    this.setState({containerWidth: width})
+    const width = ReactDOM.findDOMNode(this).offsetWidth;
+    // console.log("width1: ",width);
+    this.setState({ containerWidth: width });
   }
 
   render() {
@@ -69,12 +94,17 @@ export class UserInsightPage extends React.Component { // eslint-disable-line re
   }
 }
 
-const mapStateToProps = selectUserInsightPage();
-
 function mapDispatchToProps(dispatch) {
   return {
+    fetchContentViews: () => dispatch(fetchContentViews()),
     dispatch,
   };
 }
+
+const mapStateToProps = createStructuredSelector({
+  contentViews: selectContentViews(),
+  loading: selectLoading(),
+  error: selectError(),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserInsightPage);

@@ -2,10 +2,6 @@
   position: relative;
 }
 
-.list {
-  /*padding-top: 1em;*/
-}
-
 .list_item {
   display: inline-block;
   list-style: none;
@@ -17,7 +13,7 @@
 }
 
 .list_item:hover {
-  background-color: #2f3c52;
+  background-color: #2F3C52;
 }
 
 .global_range_filter {
@@ -26,10 +22,11 @@
 }
 
 .filter_style {
-  margin: 0 .3em;
-  font-size: .7em;
+  margin: 0 0.3em;
+  font-size: 0.7em;
   cursor: pointer;
 }
+
 .filter_style:hover {
   text-decoration: underline;
 }

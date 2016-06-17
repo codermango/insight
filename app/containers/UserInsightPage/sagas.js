@@ -1,11 +1,49 @@
-import { take, call, put, select } from 'redux-saga/effects';
+import { take, call, put, fork, cancel } from 'redux-saga/effects';
+import request from 'utils/request';
 
-// All sagas to be loaded
-export default [
-  defaultSaga,
-];
+import { LOCATION_CHANGE } from 'react-router-redux';
+import { FETCH_CONTENT_VIEWS } from './constants';
+import { fetchContentViewsSuccess, fetchContentViewsError } from './actions';
 
-// Individual exports for testing
-export function* defaultSaga() {
 
+/**
+ * Content-Views request/response handler
+ */
+export function* fetchContentViews() {
+  const requestURL = 'http://localhost:3000/api/movies/';
+
+  // Call our request helper (see 'utils/request')
+  const views = yield call(request, requestURL);
+
+  if (!views.err) {
+    yield put(fetchContentViewsSuccess(views.data.response.data));
+  } else {
+    yield put(fetchContentViewsError(views.err));
+  }
 }
+
+/**
+ * Watches for LOAD_REPOS action and calls handler
+ */
+export function* fetchInsightWatcher() {
+  while (yield take(FETCH_CONTENT_VIEWS)) {
+    yield call(fetchContentViews);
+  }
+}
+
+/**
+ * Root saga manages watcher lifecycle
+ */
+export function* userInsightData() {
+  // Fork watcher so we can continue execution
+  const watcher = yield fork(fetchInsightWatcher);
+
+  // Suspend execution until location changes
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
+
+// Bootstrap sagas
+export default [
+  userInsightData,
+];
