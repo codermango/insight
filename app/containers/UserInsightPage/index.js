@@ -66,6 +66,7 @@ export class UserInsightPage extends React.Component { // eslint-disable-line re
   }
 
   render() {
+    const { contentViews } = this.props;
     return (
       <div className={styles.userInsightPage}>
         <div>
@@ -83,8 +84,19 @@ export class UserInsightPage extends React.Component { // eslint-disable-line re
           <span className={styles.filter_style}>Day</span>
         </div>
         <div className={styles.full_width_chart}>
-          <ChartCard width={this.state.containerWidth}>
-            <AreaChart />
+          <ChartCard
+            width={this.state.containerWidth}
+            title="Content views"
+            description="Number of views over time"
+          >
+            {contentViews ?
+              <AreaChart
+                width={this.state.containerWidth}
+                data={contentViews}
+                scale="time"
+              />
+              : ''
+            }
           </ChartCard>
         </div>
         <div>

@@ -1,5 +1,6 @@
 .areaChart {
   height: 100%;
+  display: flex;
 }
 
 .chart {

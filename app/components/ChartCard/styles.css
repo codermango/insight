@@ -11,3 +11,17 @@
 .body {
   height: calc(100% - 50px);
 }
+
+.header {
+  line-height: 1em;
+}
+
+.chartHeader {
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.chartDescription {
+  font-weight: 300;
+  font-size: 0.6em;
+}
