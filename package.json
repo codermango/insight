@@ -17,10 +17,11 @@
     "preinstall": "npm run npmcheckversion",
     "postinstall": "npm run build:dll",
     "prebuild": "npm run test && npm run build:clean",
-    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p",
+    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p || true",
     "build:clean": "rimraf ./build/*",
     "build:dll": "node ./internals/scripts/dependencies.js",
-    "start": "cross-env NODE_ENV=development nodemon server",
+    "bla": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p || true",
+    "start": "cross-env NODE_ENV=development node server",
     "start:tunnel": "cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
     "start:production": "npm run build && npm run start:prod",
     "start:prod": "cross-env NODE_ENV=production node server",
@@ -75,7 +76,8 @@
       "mocha": true
     },
     "rules": {
-      "max-len": 0
+      "max-len": 0,
+      "import/no-unresolved": 0
     },
     "settings": {
       "import/resolver": {
@@ -141,7 +143,7 @@
     "redux-saga": "^0.10.0",
     "reselect": "^2.5.1",
     "sanitize.css": "^3.3.0",
-    "victory": "^0.8.0",
+    "victory": "^0.9.0",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {

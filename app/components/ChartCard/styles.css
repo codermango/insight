@@ -4,5 +4,10 @@
   border-radius: 5px;
   margin: 2px;
   display: inline-block;
-  height: 18em;
+  height: 300px;
+  overflow: hidden;
+}
+
+.body {
+  height: calc(100% - 50px);
 }

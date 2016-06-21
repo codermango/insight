@@ -10,7 +10,7 @@ import { fetchContentViewsSuccess, fetchContentViewsError } from './actions';
  * Content-Views request/response handler
  */
 export function* fetchContentViews() {
-  const requestURL = 'http://localhost:3000/api/movies/';
+  const requestURL = '/api/movies/';
 
   // Call our request helper (see 'utils/request')
   const views = yield call(request, requestURL);

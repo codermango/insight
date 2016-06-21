@@ -19,6 +19,7 @@ import {
 } from './selectors';
 
 import ChartCard from 'components/ChartCard';
+import AreaChart from 'components/AreaChart';
 
 export class UserInsightPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -82,7 +83,9 @@ export class UserInsightPage extends React.Component { // eslint-disable-line re
           <span className={styles.filter_style}>Day</span>
         </div>
         <div className={styles.full_width_chart}>
-          <ChartCard width={this.state.containerWidth} />
+          <ChartCard width={this.state.containerWidth}>
+            <AreaChart />
+          </ChartCard>
         </div>
         <div>
           <ChartCard width={this.state.containerWidth / 3} />

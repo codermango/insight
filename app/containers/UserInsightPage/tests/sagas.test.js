@@ -18,7 +18,7 @@ describe('fetchContentViews Saga', () => {
   beforeEach(() => {
     contentViewsGenerator = fetchContentViews();
 
-    const requestURL = 'http://localhost:3000/api/movies/';
+    const requestURL = '/api/movies/';
     const callDescriptor = contentViewsGenerator.next().value;
     expect(callDescriptor).toEqual(call(request, requestURL));
   });

@@ -5,13 +5,13 @@
 */
 
 import React from 'react';
-import { VictoryLine } from 'victory';
 
 import styles from './styles.css';
 
 class ChartCard extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
+    children: React.PropTypes.node,
     width: React.PropTypes.number,
   }
   render() {
@@ -23,12 +23,7 @@ class ChartCard extends React.Component { // eslint-disable-line react/prefer-st
           <span>This is a chart description</span>
         </div>
         <div className={styles.body}>
-          <VictoryLine
-            y={(data) => Math.sin(2 * Math.PI * data.x)}
-            height={200}
-            width={width * 0.75}
-            style={{ data: { stroke: 'green' } }}
-          />
+          {this.props.children}
         </div>
       </div>
     );

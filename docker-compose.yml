@@ -1,0 +1,6 @@
+insight:
+  build: .
+  volumes:
+    - "./:/opt/insight"
+  ports:
+    - "3000:3000"
