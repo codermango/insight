@@ -7,8 +7,10 @@
 import React from 'react';
 import moment from 'moment';
 import { VictoryChart, VictoryAxis, VictoryArea, VictoryScatter } from 'victory';
+import ChartLabel from 'components/ChartLabel';
 
 import styles from './styles.css';
+
 
 class AreaChart extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -61,8 +63,51 @@ class AreaChart extends React.Component { // eslint-disable-line react/prefer-st
     this.setState({ dimension: this.refs.chart.getBoundingClientRect() });
   }
 
+  chartStyles() {
+    return {
+      parent: {
+        boxSizing: 'border-box',
+        display: 'block',
+        width: '100%',
+        height: '100%',
+        padding: 20,
+      },
+      area: {
+        data: {
+          fill: '#039BE5',
+          stroke: '#039BE5',
+          strokeWidth: 2,
+          fillOpacity: 0.4,
+        },
+      },
+      scatter: {
+        data: {
+          stroke: '#039BE5',
+          fill: '#272f39',
+          strokeWidth: 2,
+        },
+        labels: {
+          fill: 'white',
+          padding: 12,
+        },
+      },
+      xAxis: {
+        axis: { stroke: 'none' },
+        ticks: { stroke: 'none' },
+        tickLabels: { fill: '#FFF', fontSize: 10 },
+      },
+      yAxis: {
+        axis: { stroke: 'none' },
+        ticks: { stroke: 'none' },
+        grid: { stroke: '#FFF', opacity: 0.2 },
+        tickLabels: { fill: '#FFF', fontSize: 10 },
+      },
+    };
+  }
+
   render() {
     const { width, height, data, scale } = this.props;
+    const chartStyles = this.chartStyles();
     const chartWidth = this.state.dimension.width > 0 ? this.state.dimension.width : width;
     const chartHeight = this.state.dimension.height > 0 ? this.state.dimension.height : height;
     return (
@@ -70,26 +115,61 @@ class AreaChart extends React.Component { // eslint-disable-line react/prefer-st
         <VictoryChart
           width={chartWidth}
           height={chartHeight}
+          style={chartStyles.parent}
         >
           <VictoryAxis
             scale={scale}
             tickCount={12}
             tickFormat={(x) => moment(x).format('MMMM')}
-            style={{ axis: { stroke: '#fff' }, ticks: { stroke: 'none' }, grid: { stroke: '#fff', opacity: 0 }, tickLabels: { fill: '#fff', fontSize: 10 }, axisLabel: { fill: '#fff', fontSize: 14 } }}
+            style={chartStyles.xAxis}
           />
           <VictoryAxis
             dependentAxis
-            style={{ axis: { stroke: 'none' }, ticks: { stroke: 'none' }, grid: { stroke: '#fff', opacity: 0.5 }, tickLabels: { fill: '#fff', fontSize: 10 }, axisLabel: { fill: '#fff', fontSize: 14 } }}
+            style={chartStyles.yAxis}
           />
           <VictoryArea
             data={data}
             standalone={false}
-            style={{ data: { fill: '#66a0d5', opacity: 0.4, stroke: '#fff' } }}
+            style={chartStyles.area}
           />
           <VictoryScatter
             data={data}
             standalone={false}
-            style={{ data: { fill: 'none', stroke: 'none' }, labels: { fill: '#fff', transition: 'fill .50 ease-in-out', fontSize: 16, opacity: 1 } }}
+            style={chartStyles.scatter}
+            labelComponent={<ChartLabel />}
+            events={[
+              {
+                target: 'data',
+                eventHandlers: {
+                  onMouseOver: () =>
+                    [
+                      {
+                        target: 'labels',
+                        mutation: () => ({ active: true }),
+                      }, {
+                        mutation: (props) => (
+                          { style:
+                            Object.assign({}, props.style, { fill: '#039BE5' }),
+                          }
+                        ),
+                      },
+                    ],
+                  onMouseOut: () =>
+                    [
+                      {
+                        target: 'labels',
+                        mutation: () => ({ active: false }),
+                      }, {
+                        mutation: (props) => (
+                          { style:
+                            Object.assign({}, props.style, { fill: '#272f39' }),
+                          }
+                        ),
+                      },
+                    ],
+                },
+              },
+            ]}
           />
         </VictoryChart>
       </div>
