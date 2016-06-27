@@ -1,15 +1,18 @@
 .chartCard {
+  flex: 1;
+  background-color: #CCC;
+  border-radius: 5px;
+  margin: 5px;
   background-color: rgba(39, 47, 57, 0.8);
   padding: 1em;
-  border-radius: 5px;
-  margin: 2px;
-  display: inline-block;
-  height: 300px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .body {
-  height: calc(100% - 50px);
+  flex: 1;
+  position: relative;
 }
 
 .header {

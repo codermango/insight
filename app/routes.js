@@ -54,7 +54,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/libraryinsight',
+      name: 'libraryInsight',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/LibraryInsight/reducer'),
+          System.import('containers/LibraryInsight'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, component]) => {
+          injectReducer('libraryInsight', reducer.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
+
 
       name: 'notfound',
       getComponent(nextState, cb) {

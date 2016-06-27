@@ -1,9 +1,21 @@
 /* Global styles */
 
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  box-sizing: border-box;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -28,10 +40,16 @@ body.fontLoaded {
   color: #FFF;
 }
 
-.wrapper {
-  margin-left: 200px;
+.insight {
   display: flex;
-  min-height: 100%;
-  padding: 0 16px;
-  flex-direction: column;
+  flex-direction: row;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.wrapper {
+  flex: 1;
+  margin: 0 10px;
+  position: relative;
 }

@@ -8,6 +8,7 @@ describe('userInsightPageReducer', () => {
       loading: false,
       contentViews: false,
       error: false,
+      topMovies: false,
     };
     expect(userInsightPageReducer(undefined, {})).toEqual(fromJS(initial));
   });

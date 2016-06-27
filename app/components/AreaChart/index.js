@@ -38,13 +38,38 @@ class AreaChart extends React.Component { // eslint-disable-line react/prefer-st
     ],
     scale: 'linear',
   }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      dimension: false,
+    };
+
+    this.resize = this.resize.bind(this);
+  }
+
+  componentDidMount() {
+    this.resize();
+    window.addEventListener('resize', this.resize, false);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize, false);
+  }
+
+  resize() {
+    this.setState({ dimension: this.refs.chart.getBoundingClientRect() });
+  }
+
   render() {
-    const { width, data, scale } = this.props;
+    const { width, height, data, scale } = this.props;
+    const chartWidth = this.state.dimension.width > 0 ? this.state.dimension.width : width;
+    const chartHeight = this.state.dimension.height > 0 ? this.state.dimension.height : height;
     return (
-      <div className={styles.areaChart}>
+      <div ref="chart" className={styles.areaChart}>
         <VictoryChart
-          width={width * 1.25}
-          padding={{ bottom: 20, top: 50, left: 20, right: 10 }}
+          width={chartWidth}
+          height={chartHeight}
         >
           <VictoryAxis
             scale={scale}
@@ -57,13 +82,11 @@ class AreaChart extends React.Component { // eslint-disable-line react/prefer-st
             style={{ axis: { stroke: 'none' }, ticks: { stroke: 'none' }, grid: { stroke: '#fff', opacity: 0.5 }, tickLabels: { fill: '#fff', fontSize: 10 }, axisLabel: { fill: '#fff', fontSize: 14 } }}
           />
           <VictoryArea
-            width={width}
             data={data}
             standalone={false}
             style={{ data: { fill: '#66a0d5', opacity: 0.4, stroke: '#fff' } }}
           />
           <VictoryScatter
-            width={width}
             data={data}
             standalone={false}
             style={{ data: { fill: 'none', stroke: 'none' }, labels: { fill: '#fff', transition: 'fill .50 ease-in-out', fontSize: 16, opacity: 1 } }}

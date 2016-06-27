@@ -77,7 +77,8 @@
     },
     "rules": {
       "max-len": 0,
-      "import/no-unresolved": 0
+      "import/no-unresolved": 0,
+      "no-underscore-dangle": ["error", { "allow": ["_source"] }]
     },
     "settings": {
       "import/resolver": {

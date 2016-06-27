@@ -9,12 +9,14 @@ import {
   FETCH_CONTENT_VIEWS,
   FETCH_CONTENT_VIEWS_SUCCESS,
   FETCH_CONTENT_VIEWS_ERROR,
+  FETCH_TOP_MOVIES_SUCCESS,
 } from './constants';
 
 const initialState = fromJS({
   loading: false,
   contentViews: false,
   error: false,
+  topMovies: false,
 });
 
 function userInsightPageReducer(state = initialState, action) {
@@ -34,6 +36,8 @@ function userInsightPageReducer(state = initialState, action) {
         .set('loading', false)
         .set('error', action.error)
         .set('contentViews', false);
+    case FETCH_TOP_MOVIES_SUCCESS:
+      return state.set('topMovies', action.data);
     default:
       return state;
   }

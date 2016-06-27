@@ -6,16 +6,16 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
 
 import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
 
-import { fetchContentViews } from './actions';
+import { fetchContentViews, fetchTopMovies, fetchUserInsight } from './actions';
 import {
   selectContentViews,
   selectLoading,
   selectError,
+  selectTopMovies,
 } from './selectors';
 
 import ChartCard from 'components/ChartCard';
@@ -25,6 +25,8 @@ export class UserInsightPage extends React.Component { // eslint-disable-line re
 
   static propTypes = {
     fetchContentViews: React.PropTypes.func,
+    fetchTopMovies: React.PropTypes.func,
+    fetchUserInsight: React.PropTypes.func,
     loading: React.PropTypes.bool,
     error: React.PropTypes.oneOfType([
       React.PropTypes.object,
@@ -34,42 +36,21 @@ export class UserInsightPage extends React.Component { // eslint-disable-line re
       React.PropTypes.array,
       React.PropTypes.bool,
     ]),
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      containerWidth: 0,
-    };
-
-    this.resize = this.resize.bind(this);
+    topMovies: React.PropTypes.oneOfType([
+      React.PropTypes.array,
+      React.PropTypes.bool,
+    ]),
   }
 
   componentWillMount() {
-    this.props.fetchContentViews();
-  }
-
-  componentDidMount() {
-    this.resize();
-    window.addEventListener('resize', this.resize, false);
-  }
-
-  componentWillUnmount() {
-    // console.log("will unmount");
-    window.removeEventListener('resize', this.resize, false);
-  }
-
-  resize() {
-    const width = ReactDOM.findDOMNode(this).offsetWidth;
-    // console.log("width1: ",width);
-    this.setState({ containerWidth: width });
+    this.props.fetchUserInsight();
   }
 
   render() {
-    const { contentViews } = this.props;
+    const { contentViews, topMovies } = this.props;
     return (
       <div className={styles.userInsightPage}>
-        <div>
+        <div className={styles.header}>
           <ul className={styles.list}>
             <li className={styles.list_item}>Movies</li>
             <li className={styles.list_item}>Genres</li>
@@ -83,15 +64,14 @@ export class UserInsightPage extends React.Component { // eslint-disable-line re
           <span className={styles.filter_style}>Month</span>
           <span className={styles.filter_style}>Day</span>
         </div>
-        <div className={styles.full_width_chart}>
+        <div ref="main_chart" className={styles.main_chart}>
           <ChartCard
-            width={this.state.containerWidth}
+            ref="main_card"
             title="Content views"
             description="Number of views over time"
           >
             {contentViews ?
               <AreaChart
-                width={this.state.containerWidth}
                 data={contentViews}
                 scale="time"
               />
@@ -99,10 +79,19 @@ export class UserInsightPage extends React.Component { // eslint-disable-line re
             }
           </ChartCard>
         </div>
-        <div>
-          <ChartCard width={this.state.containerWidth / 3} />
-          <ChartCard width={this.state.containerWidth / 3} />
-          <ChartCard width={this.state.containerWidth / 3} />
+        <div className={styles.bottom_chart}>
+          <ChartCard
+            title="Top movies"
+            description="All time most viewed movies"
+          >
+            {topMovies ?
+              topMovies.map(movie => <p key={movie.vionelID}>{movie.name}</p>)
+              :
+              ''
+            }
+          </ChartCard>
+          <ChartCard />
+          <ChartCard />
         </div>
       </div>
     );
@@ -112,6 +101,8 @@ export class UserInsightPage extends React.Component { // eslint-disable-line re
 function mapDispatchToProps(dispatch) {
   return {
     fetchContentViews: () => dispatch(fetchContentViews()),
+    fetchTopMovies: () => dispatch(fetchTopMovies()),
+    fetchUserInsight: () => dispatch(fetchUserInsight()),
     dispatch,
   };
 }
@@ -120,6 +111,7 @@ const mapStateToProps = createStructuredSelector({
   contentViews: selectContentViews(),
   loading: selectLoading(),
   error: selectError(),
+  topMovies: selectTopMovies(),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserInsightPage);

@@ -13,6 +13,7 @@ class ChartCard extends React.Component { // eslint-disable-line react/prefer-st
   static propTypes = {
     children: React.PropTypes.node,
     width: React.PropTypes.number,
+    height: React.PropTypes.number,
     title: React.PropTypes.string,
     description: React.PropTypes.string,
   }
@@ -21,9 +22,9 @@ class ChartCard extends React.Component { // eslint-disable-line react/prefer-st
     description: 'Chart description',
   }
   render() {
-    const { width, title, description } = this.props;
+    const { title, description } = this.props;
     return (
-      <div className={styles.chartCard} style={{ width: width - 4 }}>
+      <div className={styles.chartCard}>
         <div className={styles.header}>
           <h3 className={styles.chartHeader}>{title}</h3>
           <span className={styles.chartDescription}>{description}</span>

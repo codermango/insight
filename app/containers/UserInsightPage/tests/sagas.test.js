@@ -4,11 +4,11 @@
 
 import expect from 'expect';
 import { take, call, put, fork, cancel } from 'redux-saga/effects';
-import { fetchContentViews, fetchInsightWatcher, userInsightData } from '../sagas';
+import { fetchUserInsight, fetchContentViews, fetchInsightWatcher, userInsightData } from '../sagas';
 import request from 'utils/request';
 
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { FETCH_CONTENT_VIEWS } from '../constants';
+import { FETCH_USER_INSIGHT } from '../constants';
 import { fetchContentViewsSuccess, fetchContentViewsError } from '../actions';
 
 
@@ -18,7 +18,7 @@ describe('fetchContentViews Saga', () => {
   beforeEach(() => {
     contentViewsGenerator = fetchContentViews();
 
-    const requestURL = '/api/movies/';
+    const requestURL = '/api/movies/contentviews';
     const callDescriptor = contentViewsGenerator.next().value;
     expect(callDescriptor).toEqual(call(request, requestURL));
   });
@@ -53,14 +53,14 @@ describe('fetchContentViews Saga', () => {
 describe('fetchInsightWatcher Saga', () => {
   const fetchInsightWatcherGenerator = fetchInsightWatcher();
 
-  it('should watch for FETCH_CONTENT_VIEWS action', () => {
+  it('should watch for FETCH_USER_INSIGHT action', () => {
     const takeDescriptor = fetchInsightWatcherGenerator.next().value;
-    expect(takeDescriptor).toEqual(take(FETCH_CONTENT_VIEWS));
+    expect(takeDescriptor).toEqual(take(FETCH_USER_INSIGHT));
   });
 
-  it('should invoke fetchContentViews saga on actions', () => {
-    const callDescriptor = fetchInsightWatcherGenerator.next(put(FETCH_CONTENT_VIEWS)).value;
-    expect(callDescriptor).toEqual(call(fetchContentViews));
+  it('should invoke fetchUserInsight saga on actions', () => {
+    const callDescriptor = fetchInsightWatcherGenerator.next(put(FETCH_USER_INSIGHT)).value;
+    expect(callDescriptor).toEqual(call(fetchUserInsight));
   });
 });
 

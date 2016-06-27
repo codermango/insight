@@ -1,12 +1,13 @@
 const elasticsearch = require('elasticsearch');
 const client = new elasticsearch.Client({
   host: '192.168.1.122:9200',
-  log: 'trace',
 });
 
 const dataToD3Json = (data) => ({ x: data.key, y: data.doc_count, label: data.doc_count });
 
 const aggsFixer = (data) => data.map(d => dataToD3Json(d));
+
+const movieFixer = (movies) => movies.map(movie => movie._source);
 
 const contentViews = (cb) => {
   client.search({
@@ -37,6 +38,29 @@ const contentViews = (cb) => {
   });
 };
 
+const topMovies = (cb) => {
+  client.search({
+    index: 'test_cmore_content_view_3',
+    body: {
+      query: {
+        match_all: {},
+      },
+      sort: [
+        {
+          numUsers: {
+            order: 'desc',
+          },
+        },
+      ],
+    },
+  }).then((resp) => {
+    cb(movieFixer(resp.hits.hits));
+  }, (err) => {
+    cb(err.message);
+  });
+};
+
 module.exports = {
   contentViews,
+  topMovies,
 };

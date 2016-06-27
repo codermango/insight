@@ -1,5 +1,5 @@
 import { UserInsightPage } from '../index';
-import { fetchContentViews } from '../actions';
+import { fetchUserInsight } from '../actions';
 
 import expect from 'expect';
 import { shallow } from 'enzyme';
@@ -11,7 +11,7 @@ describe('<UserInsightPage />', () => {
       { x: 1, y: 1, label: 1 },
     ];
     const renderedComponent = shallow(
-      <UserInsightPage loading={false} error={false} contentViews={contentViews} fetchContentViews={fetchContentViews} />
+      <UserInsightPage loading={false} error={false} contentViews={contentViews} fetchUserInsight={fetchUserInsight} />
     );
     expect(renderedComponent.find(UserInsightPage)).toExist();
   });

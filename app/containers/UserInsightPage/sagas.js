@@ -2,18 +2,16 @@ import { take, call, put, fork, cancel } from 'redux-saga/effects';
 import request from 'utils/request';
 
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { FETCH_CONTENT_VIEWS } from './constants';
-import { fetchContentViewsSuccess, fetchContentViewsError } from './actions';
+import { FETCH_USER_INSIGHT } from './constants';
+import { fetchContentViewsSuccess, fetchContentViewsError, fetchTopMoviesSuccess } from './actions';
 
+const apiURL = '/api/movies/';
 
 /**
- * Content-Views request/response handler
+ * Content-Views handler
  */
 export function* fetchContentViews() {
-  const requestURL = '/api/movies/';
-
-  // Call our request helper (see 'utils/request')
-  const views = yield call(request, requestURL);
+  const views = yield call(request, `${apiURL}contentviews`);
 
   if (!views.err) {
     yield put(fetchContentViewsSuccess(views.data.response.data));
@@ -23,11 +21,26 @@ export function* fetchContentViews() {
 }
 
 /**
- * Watches for LOAD_REPOS action and calls handler
+ * Top-movies handler
  */
+export function* fetchTopMovies() {
+  const topMovies = yield call(request, `${apiURL}topmovies`);
+
+  if (!topMovies.err) {
+    yield put(fetchTopMoviesSuccess(topMovies.data.response.data));
+  }
+}
+
+export function* fetchUserInsight() {
+  yield [
+    call(fetchContentViews),
+    call(fetchTopMovies),
+  ];
+}
+
 export function* fetchInsightWatcher() {
-  while (yield take(FETCH_CONTENT_VIEWS)) {
-    yield call(fetchContentViews);
+  while (yield take(FETCH_USER_INSIGHT)) {
+    yield call(fetchUserInsight);
   }
 }
 

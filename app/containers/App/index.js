@@ -23,9 +23,18 @@ export default class App extends React.Component { // eslint-disable-line react/
     children: React.PropTypes.node,
   };
 
+  // componentWillMount() {
+  //   this.start = Date.now();
+  // }
+
+  // componentDidUpdate() {
+  //   console.log("start: ",Date.now());
+  //   console.log(`Updatedasd in ${Date.now() - this.start}ms`);
+  // }
+
   render() {
     return (
-      <div>
+      <div className={styles.insight}>
         <SideNav />
         <div className={styles.wrapper}>
           {this.props.children}

@@ -23,6 +23,11 @@ const selectError = () => createSelector(
   (userInsightState) => userInsightState.get('error')
 );
 
+const selectTopMovies = () => createSelector(
+  selectUserInsight(),
+  (userInsightState) => userInsightState.get('topMovies')
+);
+
 
 /**
  * Default selector used by UserInsightPage
@@ -39,4 +44,5 @@ export {
   selectContentViews,
   selectLoading,
   selectError,
+  selectTopMovies,
 };
