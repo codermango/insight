@@ -78,7 +78,14 @@
     "rules": {
       "max-len": 0,
       "import/no-unresolved": 0,
-      "no-underscore-dangle": ["error", { "allow": ["_source"] }]
+      "no-underscore-dangle": [
+        "error",
+        {
+          "allow": [
+            "_source"
+          ]
+        }
+      ]
     },
     "settings": {
       "import/resolver": {
@@ -167,6 +174,7 @@
     "coveralls": "^2.11.9",
     "cross-env": "^1.0.7",
     "css-loader": "^0.23.1",
+    "elasticsearch": "^11.0.1",
     "enzyme": "^2.2.0",
     "eslint": "^2.10.1",
     "eslint-config-airbnb": "^9.0.1",
