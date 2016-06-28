@@ -20,6 +20,7 @@ import {
 
 import ChartCard from 'components/ChartCard';
 import AreaChart from 'components/AreaChart';
+import TopMovieList from 'components/TopMovieList';
 
 export class UserInsightPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -81,11 +82,11 @@ export class UserInsightPage extends React.Component { // eslint-disable-line re
         </div>
         <div className={styles.bottom_chart}>
           <ChartCard
-            title="Top movies"
+            title="Top Movies"
             description="All time most viewed movies"
           >
             {topMovies ?
-              topMovies.map(movie => <p key={movie.vionelID}>{movie.name}</p>)
+              <TopMovieList topMovies={topMovies} />
               :
               ''
             }
