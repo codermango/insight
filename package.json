@@ -78,7 +78,14 @@
     "rules": {
       "max-len": 0,
       "import/no-unresolved": 0,
-      "no-underscore-dangle": ["error", { "allow": ["_source"] }]
+      "no-underscore-dangle": [
+        "error",
+        {
+          "allow": [
+            "_source"
+          ]
+        }
+      ]
     },
     "settings": {
       "import/resolver": {
@@ -132,6 +139,7 @@
     "history": "^2.1.0",
     "immutable": "^3.8.1",
     "ip": "^1.1.2",
+    "material-ui": "^0.15.1",
     "minimist": "^1.2.0",
     "moment": "^2.13.0",
     "react": "^15.0.1",
