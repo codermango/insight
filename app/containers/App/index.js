@@ -12,6 +12,7 @@
  */
 
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import 'sanitize.css/sanitize.css';
 import styles from './styles.css';
@@ -36,9 +37,11 @@ export default class App extends React.Component { // eslint-disable-line react/
     return (
       <div className={styles.insight}>
         <SideNav />
-        <div className={styles.wrapper}>
-          {this.props.children}
-        </div>
+        <MuiThemeProvider>
+          <div className={styles.wrapper}>
+            {this.props.children}
+          </div>
+        </MuiThemeProvider>
       </div>
     );
   }

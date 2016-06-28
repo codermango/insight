@@ -1,0 +1,9 @@
+.topMovieList {
+  overflow-y: auto;
+  height: 100%;
+  position: absolute;
+}
+
+.second {
+  color: #FFF;
+}
