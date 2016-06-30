@@ -1,22 +1,22 @@
 /*
  *
- * UserInsightPage actions
+ * UserInsightMovies actions
  *
  */
 
 import {
-  FETCH_USER_INSIGHT,
-  FETCH_CONTENT_VIEWS,
+  FETCH_USER_INSIGHT_MOVIES,
+  FETCH_CONTENT_VIEWS_START,
   FETCH_CONTENT_VIEWS_SUCCESS,
   FETCH_CONTENT_VIEWS_ERROR,
-  FETCH_TOP_MOVIES,
+  FETCH_TOP_MOVIES_START,
   FETCH_TOP_MOVIES_SUCCESS,
   FETCH_TOP_MOVIES_ERROR,
 } from './constants';
 
-export function fetchUserInsight() {
+export function fetchUserInsightMovies() {
   return {
-    type: FETCH_USER_INSIGHT,
+    type: FETCH_USER_INSIGHT_MOVIES,
   };
 }
 
@@ -27,7 +27,7 @@ export function fetchUserInsight() {
  */
 export function fetchContentViews() {
   return {
-    type: FETCH_CONTENT_VIEWS,
+    type: FETCH_CONTENT_VIEWS_START,
   };
 }
 
@@ -52,7 +52,7 @@ export function fetchContentViewsError(error) {
  */
 export function fetchTopMovies() {
   return {
-    type: FETCH_TOP_MOVIES,
+    type: FETCH_TOP_MOVIES_START,
   };
 }
 

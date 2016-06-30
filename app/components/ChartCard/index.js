@@ -5,6 +5,7 @@
 */
 
 import React from 'react';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import styles from './styles.css';
 
@@ -16,6 +17,7 @@ class ChartCard extends React.Component { // eslint-disable-line react/prefer-st
     height: React.PropTypes.number,
     title: React.PropTypes.string,
     description: React.PropTypes.string,
+    loading: React.PropTypes.bool,
   }
 
   static defaultProps = {
@@ -46,7 +48,7 @@ class ChartCard extends React.Component { // eslint-disable-line react/prefer-st
   }
 
   render() {
-    const { title, description } = this.props;
+    const { title, description, loading } = this.props;
     const bodyHeight = this.state.dimension.height > 0 ? this.state.dimension.height : 100;
     return (
       <div className={styles.chartCard}>
@@ -55,7 +57,7 @@ class ChartCard extends React.Component { // eslint-disable-line react/prefer-st
           <span className={styles.chartDescription}>{description}</span>
         </div>
         <div className={styles.body} ref="body" style={{ height: bodyHeight }}>
-          <div {...this.props} />
+          {loading ? <div className={styles.loading}><CircularProgress /></div> : <div {...this.props} />}
         </div>
       </div>
     );

@@ -25,3 +25,7 @@
   margin-left: 2em;
   color: #FFF;
 }
+
+.menu_item_name_active {
+  background-color: #2F3C52;
+}

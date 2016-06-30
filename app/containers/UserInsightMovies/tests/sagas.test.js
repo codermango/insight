@@ -3,12 +3,11 @@
  */
 
 import expect from 'expect';
-import { take, call, put, fork, cancel } from 'redux-saga/effects';
-import { fetchUserInsight, fetchContentViews, fetchInsightWatcher, userInsightData } from '../sagas';
+import { take, call, put, fork } from 'redux-saga/effects';
+import { fetchUserInsightMovies, fetchContentViews, fetchInsightWatcher, userInsightMoviesData } from '../sagas';
 import request from 'utils/request';
 
-import { LOCATION_CHANGE } from 'react-router-redux';
-import { FETCH_USER_INSIGHT } from '../constants';
+import { FETCH_USER_INSIGHT_MOVIES } from '../constants';
 import { fetchContentViewsSuccess, fetchContentViewsError } from '../actions';
 
 
@@ -53,37 +52,24 @@ describe('fetchContentViews Saga', () => {
 describe('fetchInsightWatcher Saga', () => {
   const fetchInsightWatcherGenerator = fetchInsightWatcher();
 
-  it('should watch for FETCH_USER_INSIGHT action', () => {
+  it('should watch for FETCH_USER_INSIGHT_MOVIES action', () => {
     const takeDescriptor = fetchInsightWatcherGenerator.next().value;
-    expect(takeDescriptor).toEqual(take(FETCH_USER_INSIGHT));
+    expect(takeDescriptor).toEqual(take(FETCH_USER_INSIGHT_MOVIES));
   });
 
-  it('should invoke fetchUserInsight saga on actions', () => {
-    const callDescriptor = fetchInsightWatcherGenerator.next(put(FETCH_USER_INSIGHT)).value;
-    expect(callDescriptor).toEqual(call(fetchUserInsight));
+  it('should invoke fetchUserInsightMovies saga on actions', () => {
+    const callDescriptor = fetchInsightWatcherGenerator.next(put(FETCH_USER_INSIGHT_MOVIES)).value;
+    expect(callDescriptor).toEqual(call(fetchUserInsightMovies));
   });
 });
 
-describe('userInsightDataSaga Saga', () => {
-  const userInsightDataSaga = userInsightData();
+describe('userInsightMoviesDataSaga Saga', () => {
+  const userInsightMoviesDataSaga = userInsightMoviesData();
 
   let forkDescriptor;
 
   it('should asyncronously fork fetchInsightWatcher saga', () => {
-    forkDescriptor = userInsightDataSaga.next();
+    forkDescriptor = userInsightMoviesDataSaga.next();
     expect(forkDescriptor.value).toEqual(fork(fetchInsightWatcher));
   });
-
-  it('should yield until LOCATION_CHANGE action', () => {
-    const takeDescriptor = userInsightDataSaga.next();
-    expect(takeDescriptor.value).toEqual(take(LOCATION_CHANGE));
-  });
-
-  it('should finally cancel() the forked fetchInsightWatcher saga',
-    function* fetchInsightSagaCancellable() {
-      // reuse open fork for more integrated approach
-      forkDescriptor = userInsightDataSaga.next(put(LOCATION_CHANGE));
-      expect(forkDescriptor.value).toEqual(cancel(forkDescriptor));
-    }
-  );
 });
