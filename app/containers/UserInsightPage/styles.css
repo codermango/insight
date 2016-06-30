@@ -8,6 +8,7 @@
 
 .header {
   height: 50px;
+  margin: 0 5px;
 }
 
 .list_item {
@@ -15,9 +16,14 @@
   list-style: none;
   text-align: center;
   width: 25%;
+  cursor: pointer;
+}
+
+.link {
+  display: block;
+  color: #FFF;
   padding-top: 1em;
   padding-bottom: 1em;
-  cursor: pointer;
 }
 
 .list_item:hover {
