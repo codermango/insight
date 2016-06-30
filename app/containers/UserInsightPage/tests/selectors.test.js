@@ -1,36 +1,9 @@
 import {
   selectContentViews,
-  selectLoading,
-  selectError,
+  selectTopMovies,
 } from '../selectors';
 import { fromJS } from 'immutable';
 import expect from 'expect';
-
-describe('selectLoading', () => {
-  const loadingSelector = selectLoading();
-  it('should select the loading', () => {
-    const loading = false;
-    const mockedState = fromJS({
-      userInsightPage: {
-        loading,
-      },
-    });
-    expect(loadingSelector(mockedState)).toEqual(loading);
-  });
-});
-
-describe('selectError', () => {
-  const errorSelector = selectError();
-  it('should select the error', () => {
-    const error = 404;
-    const mockedState = fromJS({
-      userInsightPage: {
-        error,
-      },
-    });
-    expect(errorSelector(mockedState)).toEqual(error);
-  });
-});
 
 describe('selectContentViews', () => {
   const contentViewsSelector = selectContentViews();
@@ -42,5 +15,18 @@ describe('selectContentViews', () => {
       },
     });
     expect(contentViewsSelector(mockedState)).toEqual(contentViews);
+  });
+});
+
+describe('selectTopMovies', () => {
+  const topMoviesSelector = selectTopMovies();
+  it('should select the topMovies', () => {
+    const topMovies = fromJS([]);
+    const mockedState = fromJS({
+      userInsightPage: {
+        topMovies,
+      },
+    });
+    expect(topMoviesSelector(mockedState)).toEqual(topMovies);
   });
 });

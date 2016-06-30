@@ -34,7 +34,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/userinsight',
+      path: '/userinsight/:category',
       name: 'userInsightPage',
       getComponent(nextState, cb) {
         const importModules = Promise.all([

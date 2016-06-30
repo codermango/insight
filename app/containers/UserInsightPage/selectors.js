@@ -13,16 +13,6 @@ const selectContentViews = () => createSelector(
   (userInsightState) => userInsightState.get('contentViews')
 );
 
-const selectLoading = () => createSelector(
-  selectUserInsight(),
-  (userInsightState) => userInsightState.get('loading')
-);
-
-const selectError = () => createSelector(
-  selectUserInsight(),
-  (userInsightState) => userInsightState.get('error')
-);
-
 const selectTopMovies = () => createSelector(
   selectUserInsight(),
   (userInsightState) => userInsightState.get('topMovies')
@@ -42,7 +32,5 @@ export default selectUserInsightPage;
 export {
   selectUserInsight,
   selectContentViews,
-  selectLoading,
-  selectError,
   selectTopMovies,
 };
