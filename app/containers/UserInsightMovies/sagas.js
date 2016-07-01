@@ -1,4 +1,5 @@
-import { take, call, put, fork } from 'redux-saga/effects';
+import { take, call, put, cancel, fork } from 'redux-saga/effects';
+import { LOCATION_CHANGE } from 'react-router-redux';
 import request from 'utils/request';
 
 import { FETCH_USER_INSIGHT_MOVIES } from './constants';
@@ -46,7 +47,10 @@ export function* fetchInsightWatcher() {
 
 // Individual exports for testing
 export function* userInsightMoviesData() {
-  yield fork(fetchInsightWatcher);
+  const watcher = yield fork(fetchInsightWatcher);
+
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
 }
 
 // All sagas to be loaded

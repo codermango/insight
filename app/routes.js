@@ -34,7 +34,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/userinsight/:category',
+      path: '/userinsight',
       name: 'userInsightPage',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
@@ -52,6 +52,18 @@ export default function createRoutes(store) {
         });
 
         importModules.catch(errorLoading);
+      },
+      getChildRoutes(location, cb) {
+        System.import('containers/UserInsightPage/routes')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+      indexRoute: {
+        getComponent(nextState, cb) {
+          System.import('containers/UserInsightDashboard')
+            .then(loadModule(cb))
+            .catch(errorLoading);
+        },
       },
     }, {
       path: '/libraryinsight',
