@@ -13,6 +13,11 @@ import {
   FETCH_TOP_MOVIES_SUCCESS,
   FETCH_TOP_MOVIES_ERROR,
 } from 'containers/UserInsightMovies/constants';
+import {
+  FETCH_USER_INSIGHT_GENRES,
+  FETCH_TIME_GENRES_SUCCESS,
+  FETCH_TIME_GENRES_ERROR,
+} from 'containers/UserInsightGenres/constants';
 
 const initialState = fromJS({
   contentViews: fromJS({
@@ -21,6 +26,11 @@ const initialState = fromJS({
     error: false,
   }),
   topMovies: fromJS({
+    loading: false,
+    data: false,
+    error: false,
+  }),
+  timeGenres: fromJS({
     loading: false,
     data: false,
     error: false,
@@ -55,6 +65,19 @@ function userInsightPageReducer(state = initialState, action) {
       return state
         .setIn(['topMovies', 'loading'], false)
         .setIn(['topMovies', 'error'], action.error);
+    case FETCH_USER_INSIGHT_GENRES:
+      return state
+        .setIn(['timeGenres', 'loading'], true)
+        .setIn(['timeGenres', 'error'], false);
+    case FETCH_TIME_GENRES_SUCCESS:
+      return state
+        .setIn(['timeGenres', 'loading'], false)
+        .setIn(['timeGenres', 'data'], action.data)
+        .setIn(['timeGenres', 'error'], false);
+    case FETCH_TIME_GENRES_ERROR:
+      return state
+        .setIn(['timeGenres', 'loading'], false)
+        .setIn(['timeGenres', 'error'], action.error);
     default:
       return state;
   }

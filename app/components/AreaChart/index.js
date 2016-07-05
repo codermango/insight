@@ -6,7 +6,7 @@
 
 import React from 'react';
 import moment from 'moment';
-import { VictoryChart, VictoryAxis, VictoryArea, VictoryScatter } from 'victory';
+import { VictoryChart, VictoryAxis, VictoryArea, VictoryScatter, VictoryBar } from 'victory';
 import ChartLabel from 'components/ChartLabel';
 
 import styles from './styles.css';
@@ -74,10 +74,21 @@ class AreaChart extends React.Component { // eslint-disable-line react/prefer-st
       },
       area: {
         data: {
-          fill: '#039BE5',
+          fill: 'url(#Gradient1)',
           stroke: '#039BE5',
           strokeWidth: 2,
-          fillOpacity: 0.4,
+          opacity: 0.5,
+        },
+      },
+      bar: {
+        data: {
+          fill: 'url(#Gradient1)',
+          stroke: 'none',
+          strokeWidth: 0,
+          opacity: 0.2,
+        },
+        labels: {
+          display: 'none',
         },
       },
       scatter: {
@@ -117,6 +128,11 @@ class AreaChart extends React.Component { // eslint-disable-line react/prefer-st
           height={chartHeight}
           style={chartStyles.parent}
         >
+          <linearGradient id="Gradient1" x1="0" x2="0" y1="0" y2="1">
+            <stop className="stop1" stopColor="#039BE5" offset="0%" />
+            <stop className="stop2" stopColor="#039BE5" stopOpacity={0.5} offset="50%" />
+            <stop className="stop3" stopColor="#039BE5" stopOpacity={0} offset="100%" />
+          </linearGradient>
           <VictoryAxis
             scale={scale}
             tickCount={12}
@@ -132,6 +148,11 @@ class AreaChart extends React.Component { // eslint-disable-line react/prefer-st
             standalone={false}
             style={chartStyles.area}
           />
+          <VictoryBar
+            data={data}
+            standalone={false}
+            style={chartStyles.bar}
+          />
           <VictoryScatter
             data={data}
             standalone={false}
@@ -146,7 +167,8 @@ class AreaChart extends React.Component { // eslint-disable-line react/prefer-st
                       {
                         target: 'labels',
                         mutation: () => ({ active: true }),
-                      }, {
+                      },
+                      {
                         mutation: (props) => (
                           { style:
                             Object.assign({}, props.style, { fill: '#039BE5' }),

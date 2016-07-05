@@ -13,6 +13,7 @@ function BarComponent(props) {
     data: {
       fill: '#76FF03',
       width: 26,
+      strokeLinecap: 'round',
     },
   };
   return (

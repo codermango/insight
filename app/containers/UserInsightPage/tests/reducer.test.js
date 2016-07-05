@@ -15,6 +15,11 @@ describe('userInsightPageReducer', () => {
         data: false,
         error: false,
       }),
+      timeGenres: fromJS({
+        loading: false,
+        data: false,
+        error: false,
+      }),
     };
     expect(userInsightPageReducer(undefined, {})).toEqual(fromJS(initial));
   });
