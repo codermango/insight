@@ -52,10 +52,14 @@ class StackedLineChart extends React.Component {
       xMin: 0,
       xMax: 0,
       dimension: false,
+      blacklist: [],
     };
 
     this.chartDomain = this.chartDomain.bind(this);
     this.resize = this.resize.bind(this);
+    this.blackListed = this.blackListed.bind(this);
+    this.blacklist = this.blacklist.bind(this);
+    this.whitelist = this.whitelist.bind(this);
   }
 
   componentDidMount() {
@@ -118,6 +122,30 @@ class StackedLineChart extends React.Component {
     };
   }
 
+  blackListed(item) {
+    return this.state.blacklist.indexOf(item) === -1;
+  }
+
+  blacklist(item) {
+    const listIndex = this.state.blacklist.indexOf(item);
+    if (listIndex === -1) {
+      const newBlacklist = this.state.blacklist;
+      newBlacklist.push(item);
+      this.setState({ blacklist: newBlacklist });
+    } else {
+      this.whitelist(item);
+    }
+  }
+
+  whitelist(item) {
+    const listIndex = this.state.blacklist.indexOf(item);
+    if (listIndex !== -1) {
+      const newBlacklist = this.state.blacklist;
+      newBlacklist.splice(listIndex, 1);
+      this.setState({ blacklist: newBlacklist });
+    }
+  }
+
   render() {
     const { width, height, data, scale } = this.props;
     const chartStyles = this.chartStyles();
@@ -125,6 +153,18 @@ class StackedLineChart extends React.Component {
     const chartHeight = this.state.dimension.height > 0 ? this.state.dimension.height : height;
     return (
       <div ref="chart" className={styles.stackedLineChart}>
+        {data ?
+          <div style={{ fontSize: 10, marginTop: '5px', position: 'absolute' }}>
+            {data.map(stack =>
+              <div key={stack.name} style={{ display: 'inline-block', position: 'relative', cursor: 'pointer', padding: '0 5px', opacity: this.blackListed(stack.name) ? 1 : 0.5 }} onClick={() => this.blacklist(stack.name)}>
+                <span style={{ width: '5px', height: '5px', backgroundColor: stack.color, position: 'absolute', top: '5px', borderRadius: '5px' }}></span>
+                <span style={{ marginLeft: '8px' }}>{stack.name}</span>
+              </div>
+            )}
+          </div>
+          :
+          ''
+        }
         {data ?
           <VictoryChart
             width={chartWidth}
@@ -143,14 +183,14 @@ class StackedLineChart extends React.Component {
               style={chartStyles.yAxis}
             />
             {data.map(d =>
-              <VictoryLine key={d.name} data={d.data} style={{ data: { stroke: d.color, strokeWidth: 3, opacity: 0.8 } }} />
+              <VictoryLine key={d.name} data={d.data} style={{ data: { stroke: d.color, strokeWidth: 3, opacity: 0.8, display: this.blackListed(d.name) ? 'block' : 'none' } }} />
             )}
             {data.map(d =>
               <VictoryScatter
                 key={d.name}
                 data={d.data}
                 standalone={false}
-                style={{ data: { fill: d.color }, labels: { fill: '#FFF', padding: 12, fontSize: 16 } }}
+                style={{ data: { fill: d.color, display: this.blackListed(d.name) ? 'block' : 'none' }, labels: { fill: '#FFF', padding: 12, fontSize: 16 } }}
                 labelComponent={<ChartLabel />}
                 events={[
                   {

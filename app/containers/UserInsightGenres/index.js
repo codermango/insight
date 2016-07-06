@@ -42,7 +42,6 @@ export class UserInsightGenres extends React.Component { // eslint-disable-line 
           title="Genre Popularity"
           description="Top viewed genres in percentage over time"
           loading={timeGenres.get('loading')}
-          stackDescription={timeGenres.get('data')}
         >
           {timeGenres.get('data') ?
             <StackedLineChart data={timeGenres.get('data')} scale="time" />
