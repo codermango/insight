@@ -8,3 +8,17 @@
 .chart {
   height: 100%;
 }
+
+.stop1 {
+  stop-color: red;
+}
+
+.stop2 {
+  stop-color: red;
+  stop-opacity: 0.3;
+}
+
+.stop3 {
+  stop-color: red;
+  stop-opacity: 0;
+}

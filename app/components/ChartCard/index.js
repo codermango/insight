@@ -29,6 +29,7 @@ class ChartCard extends React.Component { // eslint-disable-line react/prefer-st
     super(props);
     this.state = {
       dimension: false,
+      blacklist: ['Drama'],
     };
 
     this.resize = this.resize.bind(this);
@@ -57,7 +58,7 @@ class ChartCard extends React.Component { // eslint-disable-line react/prefer-st
           <span className={styles.chartDescription}>{description}</span>
         </div>
         <div className={styles.body} ref="body" style={{ height: bodyHeight }}>
-          {loading ? <div className={styles.loading}><CircularProgress /></div> : <div {...this.props} />}
+          {loading ? <div className={styles.loading}><CircularProgress /></div> : <div {...this.props} blacklist={this.state.blacklist} />}
         </div>
       </div>
     );
