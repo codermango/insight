@@ -3,7 +3,12 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import request from 'utils/request';
 
 import { FETCH_USER_INSIGHT_MOVIES } from './constants';
-import { fetchContentViewsSuccess, fetchContentViewsError, fetchTopMoviesSuccess } from './actions';
+import {
+  fetchContentViewsSuccess,
+  fetchContentViewsError,
+  fetchTopMoviesSuccess,
+  fetchTopPurchasedMoviesSuccess,
+} from './actions';
 
 const apiURL = '/api/movies/';
 
@@ -32,10 +37,19 @@ export function* fetchTopMovies() {
   }
 }
 
+export function* fetchTopPurchasedMovies() {
+  const topMovies = yield call(request, `${apiURL}toppurchasedmovies`);
+
+  if (!topMovies.err) {
+    yield put(fetchTopPurchasedMoviesSuccess(topMovies.data.response.data));
+  }
+}
+
 export function* fetchUserInsightMovies() {
   yield [
     call(fetchContentViews),
     call(fetchTopMovies),
+    call(fetchTopPurchasedMovies),
   ];
 }
 

@@ -132,8 +132,51 @@ const timeGenres = (cb) => {
   });
 };
 
+const topPurchasedMovies = (cb) => {
+  client.search({
+    index: 'test_plejmo_transaction_data',
+    body: {
+      query: {
+        query_string: {
+          query: '*',
+          analyze_wildcard: true,
+        },
+      },
+      size: 0,
+      aggs: {
+        content: {
+          terms: {
+            field: 'imdb_id',
+            size: 10,
+            order: {
+              total_purchase_amount: 'desc',
+            },
+          },
+          aggs: {
+            total_purchase_amount: {
+              sum: {
+                field: 'purchase_amount_sek',
+              },
+            },
+          },
+        },
+      },
+    },
+  }).then((resp) => {
+    cb(resp.aggregations.content.buckets.map(movie => ({
+      vionelID: movie.key,
+      name: movie.key,
+      purchase_amount: Number(Number(movie.total_purchase_amount.value).toFixed(2)),
+      thumbnailUrl: 'http://image.tmdb.org/t/p/w185/niYdnzkrtBduR5lKtfeLXKXNaTT.jpg',
+    })));
+  }, (err) => {
+    cb(err.message);
+  });
+};
+
 module.exports = {
   contentViews,
   topMovies,
   timeGenres,
+  topPurchasedMovies,
 };

@@ -12,6 +12,9 @@ import {
   FETCH_TOP_MOVIES_START,
   FETCH_TOP_MOVIES_SUCCESS,
   FETCH_TOP_MOVIES_ERROR,
+  FETCH_TOP_PURCHASED_MOVIES_START,
+  FETCH_TOP_PURCHASED_MOVIES_SUCCESS,
+  FETCH_TOP_PURCHASED_MOVIES_ERROR,
 } from './constants';
 
 export function fetchUserInsightMovies() {
@@ -66,6 +69,31 @@ export function fetchTopMoviesSuccess(data) {
 export function fetchTopMoviesError(error) {
   return {
     type: FETCH_TOP_MOVIES_ERROR,
+    error,
+  };
+}
+
+/*
+ *
+ * TopPurchasedMovies actions
+ *
+ */
+export function fetchTopPurchasedMovies() {
+  return {
+    type: FETCH_TOP_PURCHASED_MOVIES_START,
+  };
+}
+
+export function fetchTopPurchasedMoviesSuccess(data) {
+  return {
+    type: FETCH_TOP_PURCHASED_MOVIES_SUCCESS,
+    data,
+  };
+}
+
+export function fetchTopPurchasedMoviesError(error) {
+  return {
+    type: FETCH_TOP_PURCHASED_MOVIES_ERROR,
     error,
   };
 }

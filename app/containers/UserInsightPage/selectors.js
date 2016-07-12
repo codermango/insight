@@ -23,6 +23,11 @@ const selectTimeGenres = () => createSelector(
   (userInsightState) => userInsightState.get('timeGenres')
 );
 
+const selectTopPurchasedMovies = () => createSelector(
+  selectUserInsight(),
+  (userInsightState) => userInsightState.get('topPurchasedMovies')
+);
+
 
 /**
  * Default selector used by UserInsightPage
@@ -39,4 +44,5 @@ export {
   selectContentViews,
   selectTopMovies,
   selectTimeGenres,
+  selectTopPurchasedMovies,
 };

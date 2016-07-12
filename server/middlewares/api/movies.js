@@ -17,4 +17,11 @@ router.route('/topmovies')
     });
   });
 
+router.route('/toppurchasedmovies')
+  .get((req, res) => {
+    esHelper.topPurchasedMovies((resp) => {
+      res.send({ response: { data: resp } });
+    });
+  });
+
 module.exports = router;
