@@ -21,6 +21,11 @@ import {
   FETCH_TIME_GENRES_SUCCESS,
   FETCH_TIME_GENRES_ERROR,
 } from 'containers/UserInsightGenres/constants';
+import {
+  FETCH_USER_INSIGHT_TRANSACTIONS,
+  FETCH_TIME_TRANSACTIONS_SUCCESS,
+  FETCH_TIME_TRANSACTIONS_ERROR,
+} from 'containers/UserInsightTransactions/constants';
 
 const initialState = fromJS({
   contentViews: fromJS({
@@ -39,6 +44,11 @@ const initialState = fromJS({
     error: false,
   }),
   topPurchasedMovies: fromJS({
+    loading: false,
+    data: false,
+    error: false,
+  }),
+  timeTransactions: fromJS({
     loading: false,
     data: false,
     error: false,
@@ -99,6 +109,19 @@ function userInsightPageReducer(state = initialState, action) {
       return state
         .setIn(['topPurchasedMovies', 'loading'], false)
         .setIn(['topPurchasedMovies', 'error'], action.error);
+    case FETCH_USER_INSIGHT_TRANSACTIONS:
+      return state
+        .setIn(['timeTransactions', 'loading'], true)
+        .setIn(['timeTransactions', 'error'], false);
+    case FETCH_TIME_TRANSACTIONS_SUCCESS:
+      return state
+        .setIn(['timeTransactions', 'loading'], false)
+        .setIn(['timeTransactions', 'data'], action.data)
+        .setIn(['timeTransactions', 'error'], false);
+    case FETCH_TIME_TRANSACTIONS_ERROR:
+      return state
+        .setIn(['timeTransactions', 'loading'], false)
+        .setIn(['timeTransactions', 'error'], action.error);
     default:
       return state;
   }

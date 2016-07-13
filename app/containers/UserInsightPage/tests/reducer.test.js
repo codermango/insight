@@ -25,6 +25,11 @@ describe('userInsightPageReducer', () => {
         data: false,
         error: false,
       }),
+      timeTransactions: fromJS({
+        loading: false,
+        data: false,
+        error: false,
+      }),
     };
     expect(userInsightPageReducer(undefined, {})).toEqual(fromJS(initial));
   });
