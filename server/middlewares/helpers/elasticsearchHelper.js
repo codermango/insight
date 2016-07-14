@@ -144,9 +144,23 @@ const aggsQuery = (query, index, cb) => {
   });
 };
 
+const aggsChildQuery = (query, index, cb) => {
+  client.search({
+    index,
+    body: query,
+  })
+  .then((resp) => {
+    const dataFix = resp.aggregations.content.buckets.map(b => ({ x: b.key, y: b.child.value, label: b.child.value }));
+    cb(dataFix);
+  }, (err) => {
+    cb(err.message);
+  });
+};
+
 module.exports = {
   contentViews,
   topMovies,
   timeGenres,
   aggsQuery,
+  aggsChildQuery,
 };

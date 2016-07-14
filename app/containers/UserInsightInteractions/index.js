@@ -11,16 +11,22 @@ import styles from './styles.css';
 import { fetchUserInsightInteractions } from './actions';
 import {
   selectCompleteness,
+  selectAverageInteractions,
 } from 'containers/UserInsightPage/selectors';
 
 import ChartCard from 'components/ChartCard';
 import BarChart from 'components/BarChart';
+import LineChart from 'components/LineChart';
 
 export class UserInsightInteractions extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
     fetchUserInsightInteractions: React.PropTypes.func,
     completeness: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.bool,
+    ]),
+    averageInteractions: React.PropTypes.oneOfType([
       React.PropTypes.object,
       React.PropTypes.bool,
     ]),
@@ -33,7 +39,7 @@ export class UserInsightInteractions extends React.Component { // eslint-disable
   }
 
   render() {
-    const { completeness } = this.props;
+    const { completeness, averageInteractions } = this.props;
 
     return (
       <div className={styles.userInsightInteractions}>
@@ -50,7 +56,19 @@ export class UserInsightInteractions extends React.Component { // eslint-disable
             : ''
           }
         </ChartCard>
-        <ChartCard />
+        <ChartCard
+          title="Average user activity"
+          description="Average number of movies watched per user and week"
+          loading={averageInteractions.get('loading')}
+        >
+          {averageInteractions.get('data') ?
+            <LineChart
+              data={averageInteractions.get('data')}
+              scale="time"
+            />
+            : ''
+          }
+        </ChartCard>
       </div>
     );
   }
@@ -58,6 +76,7 @@ export class UserInsightInteractions extends React.Component { // eslint-disable
 
 const mapStateToProps = createStructuredSelector({
   completeness: selectCompleteness(),
+  averageInteractions: selectAverageInteractions(),
 });
 
 function mapDispatchToProps(dispatch) {

@@ -13,8 +13,17 @@ describe('<UserInsightInteractions />', () => {
       error: false,
       data: false,
     });
+    const averageInteractions = fromJS({
+      loading: false,
+      error: false,
+      data: false,
+    });
     const renderedComponent = shallow(
-      <UserInsightInteractions fetchUserInsightInteractions={fetchUserInsightInteractions} completeness={completeness} />
+      <UserInsightInteractions
+        fetchUserInsightInteractions={fetchUserInsightInteractions}
+        completeness={completeness}
+        averageInteractions={averageInteractions}
+      />
     );
     expect(renderedComponent.find(UserInsightInteractions)).toExist();
   });

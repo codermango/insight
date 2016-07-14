@@ -28,6 +28,11 @@ const selectCompleteness = () => createSelector(
   (userInsightState) => userInsightState.get('completeness')
 );
 
+const selectAverageInteractions = () => createSelector(
+  selectUserInsight(),
+  (userInsightState) => userInsightState.get('averageInteractions')
+);
+
 
 /**
  * Default selector used by UserInsightPage
@@ -45,4 +50,5 @@ export {
   selectTopMovies,
   selectTimeGenres,
   selectCompleteness,
+  selectAverageInteractions,
 };

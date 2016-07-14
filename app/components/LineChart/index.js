@@ -1,15 +1,16 @@
 /**
 *
-* BarChart
+* LineChart
 *
 */
 
 import React from 'react';
-import { VictoryChart, VictoryAxis, VictoryBar } from 'victory';
+import moment from 'moment';
+import { VictoryChart, VictoryAxis, VictoryLine } from 'victory';
 
 import styles from './styles.css';
 
-class BarChart extends React.Component { // eslint-disable-line react/prefer-stateless-function
+class LineChart extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
     width: React.PropTypes.number,
@@ -69,13 +70,11 @@ class BarChart extends React.Component { // eslint-disable-line react/prefer-sta
         height: '100%',
         padding: 20,
       },
-      bar: {
+      line: {
         data: {
-          fill: 'url(#GradientBar)',
-          stroke: 'none',
-          strokeWidth: 0,
+          fill: 'none',
+          stroke: 'url(#GradientLine)',
           opacity: 1,
-          width: 18,
         },
         labels: {
           display: 'none',
@@ -104,38 +103,37 @@ class BarChart extends React.Component { // eslint-disable-line react/prefer-sta
     const chartHeight = this.state.dimension.height > 0 ? this.state.dimension.height : height;
 
     return (
-      <div ref="chart" className={styles.barChart}>
+      <div ref="chart" className={styles.lineChart}>
         <VictoryChart
           domainPadding={{ x: 20 }}
+          width={chartWidth}
+          height={chartHeight}
+          style={chartStyles.parent}
           padding={{
-            top: 5,
+            top: 10,
             bottom: 40,
             left: 40,
             right: 40,
           }}
-          width={chartWidth}
-          height={chartHeight}
-          style={chartStyles.parent}
         >
-          <linearGradient id="GradientBar" x1="0" x2="0" y1="0" y2="1">
+          <linearGradient id="GradientLine" x1="0" x2="0" y1="0" y2="1">
             <stop className="stop1" stopColor="#039BE5" offset="0%" />
-            <stop className="stop2" stopColor="#039BE5" stopOpacity={0.5} offset="50%" />
-            <stop className="stop3" stopColor="#039BE5" stopOpacity={0} offset="100%" />
+            <stop className="stop2" stopColor="#039BE5" offset="50%" />
+            <stop className="stop3" stopColor="red" offset="100%" />
           </linearGradient>
           <VictoryAxis
             scale={scale}
             style={chartStyles.xAxis}
-            tickFormat={(x) => `${x}%`}
-            tickCount={data.length}
+            tickFormat={(x) => moment(x).format('MMMM')}
           />
           <VictoryAxis
             dependentAxis
             style={chartStyles.yAxis}
           />
-          <VictoryBar
+          <VictoryLine
             data={data}
             standalone={false}
-            style={chartStyles.bar}
+            style={chartStyles.line}
             events={[
               {
                 target: 'data',
@@ -172,4 +170,4 @@ class BarChart extends React.Component { // eslint-disable-line react/prefer-sta
   }
 }
 
-export default BarChart;
+export default LineChart;
