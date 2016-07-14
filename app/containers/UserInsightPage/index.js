@@ -22,7 +22,7 @@ export default class UserInsightPage extends React.Component { // eslint-disable
           <ul className={styles.list}>
             <li className={styles.list_item}><Link to="/userinsight/movies" activeStyle={{ backgroundColor: '#2F3C52' }} className={styles.link}>Movies</Link></li>
             <li className={styles.list_item}><Link to="/userinsight/genres" activeStyle={{ backgroundColor: '#2F3C52' }} className={styles.link}>Genres</Link></li>
-            <li className={styles.list_item}><Link to="/userinsight/users" activeStyle={{ backgroundColor: '#2F3C52' }} className={styles.link}>User behavior</Link></li>
+            <li className={styles.list_item}><Link to="/userinsight/interactions" activeStyle={{ backgroundColor: '#2F3C52' }} className={styles.link}>Interactions</Link></li>
             <li className={styles.list_item}><Link to="/userinsight/devices" activeStyle={{ backgroundColor: '#2F3C52' }} className={styles.link}>Devices</Link></li>
           </ul>
         </div>

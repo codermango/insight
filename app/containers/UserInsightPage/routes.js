@@ -1,5 +1,6 @@
 import UserInsightMovies from 'containers/UserInsightMovies';
 import UserInsightGenres from 'containers/UserInsightGenres';
+import UserInsightInteractions from 'containers/UserInsightInteractions';
 
 const childRoutes = [
   {
@@ -9,6 +10,10 @@ const childRoutes = [
   {
     path: 'genres',
     component: UserInsightGenres,
+  },
+  {
+    path: 'interactions',
+    component: UserInsightInteractions,
   },
 ];
 

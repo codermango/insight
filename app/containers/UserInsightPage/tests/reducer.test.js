@@ -20,6 +20,11 @@ describe('userInsightPageReducer', () => {
         data: false,
         error: false,
       }),
+      completeness: fromJS({
+        loading: false,
+        data: false,
+        error: false,
+      }),
     };
     expect(userInsightPageReducer(undefined, {})).toEqual(fromJS(initial));
   });

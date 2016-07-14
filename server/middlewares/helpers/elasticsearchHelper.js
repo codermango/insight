@@ -132,8 +132,21 @@ const timeGenres = (cb) => {
   });
 };
 
+const aggsQuery = (query, index, cb) => {
+  client.search({
+    index,
+    body: query,
+  })
+  .then((resp) => {
+    cb(aggsFixer(resp.aggregations.content.buckets));
+  }, (err) => {
+    cb(err.message);
+  });
+};
+
 module.exports = {
   contentViews,
   topMovies,
   timeGenres,
+  aggsQuery,
 };

@@ -18,6 +18,11 @@ import {
   FETCH_TIME_GENRES_SUCCESS,
   FETCH_TIME_GENRES_ERROR,
 } from 'containers/UserInsightGenres/constants';
+import {
+  FETCH_COMPLETENESS_START,
+  FETCH_COMPLETENESS_SUCCESS,
+  FETCH_COMPLETENESS_ERROR,
+} from 'containers/UserInsightInteractions/constants';
 
 const initialState = fromJS({
   contentViews: fromJS({
@@ -31,6 +36,11 @@ const initialState = fromJS({
     error: false,
   }),
   timeGenres: fromJS({
+    loading: false,
+    data: false,
+    error: false,
+  }),
+  completeness: fromJS({
     loading: false,
     data: false,
     error: false,
@@ -78,6 +88,19 @@ function userInsightPageReducer(state = initialState, action) {
       return state
         .setIn(['timeGenres', 'loading'], false)
         .setIn(['timeGenres', 'error'], action.error);
+    case FETCH_COMPLETENESS_START:
+      return state
+        .setIn(['completeness', 'loading'], true)
+        .setIn(['completeness', 'error'], false);
+    case FETCH_COMPLETENESS_SUCCESS:
+      return state
+        .setIn(['completeness', 'loading'], false)
+        .setIn(['completeness', 'data'], action.data)
+        .setIn(['completeness', 'error'], false);
+    case FETCH_COMPLETENESS_ERROR:
+      return state
+        .setIn(['completeness', 'loading'], false)
+        .setIn(['completeness', 'error'], action.error);
     default:
       return state;
   }
