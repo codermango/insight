@@ -13,8 +13,17 @@ describe('<UserInsightTransactions />', () => {
       error: false,
       data: false,
     });
+    const genreTransactions = fromJS({
+      loading: false,
+      error: false,
+      data: false,
+    });
     const renderedComponent = shallow(
-      <UserInsightTransactions fetchUserInsightTransactions={fetchUserInsightTransactions} timeTransactions={timeTransactions} />
+      <UserInsightTransactions
+        fetchUserInsightTransactions={fetchUserInsightTransactions}
+        timeTransactions={timeTransactions}
+        genreTransactions={genreTransactions}
+      />
     );
     expect(renderedComponent.find(UserInsightTransactions)).toExist();
   });

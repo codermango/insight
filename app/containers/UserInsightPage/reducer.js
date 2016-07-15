@@ -25,6 +25,8 @@ import {
   FETCH_USER_INSIGHT_TRANSACTIONS,
   FETCH_TIME_TRANSACTIONS_SUCCESS,
   FETCH_TIME_TRANSACTIONS_ERROR,
+  FETCH_GENRE_TRANSACTIONS_SUCCESS,
+  FETCH_GENRE_TRANSACTIONS_ERROR,
 } from 'containers/UserInsightTransactions/constants';
 import {
   FETCH_COMPLETENESS_START,
@@ -70,6 +72,11 @@ const initialState = fromJS({
     error: false,
   }),
   averageInteractions: fromJS({
+    loading: false,
+    data: false,
+    error: false,
+  }),
+  genreTransactions: fromJS({
     loading: false,
     data: false,
     error: false,
@@ -144,6 +151,15 @@ function userInsightPageReducer(state = initialState, action) {
       return state
         .setIn(['timeTransactions', 'loading'], false)
         .setIn(['timeTransactions', 'error'], action.error);
+    case FETCH_GENRE_TRANSACTIONS_SUCCESS:
+      return state
+        .setIn(['genreTransactions', 'loading'], false)
+        .setIn(['genreTransactions', 'data'], action.data)
+        .setIn(['genreTransactions', 'error'], false);
+    case FETCH_GENRE_TRANSACTIONS_ERROR:
+      return state
+        .setIn(['genreTransactions', 'loading'], false)
+        .setIn(['genreTransactions', 'error'], action.error);
 
     case FETCH_COMPLETENESS_START:
       return state

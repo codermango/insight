@@ -3,7 +3,12 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import request from 'utils/request';
 
 import { FETCH_USER_INSIGHT_TRANSACTIONS } from './constants';
-import { fetchTimeTransactionsSuccess, fetchTimeTransactionsError } from './actions';
+import {
+  fetchTimeTransactionsSuccess,
+  fetchTimeTransactionsError,
+  fetchGenreTransactionsSuccess,
+  fetchGenreTransactionsError,
+} from './actions';
 
 const apiURL = '/api/transactions/';
 
@@ -16,9 +21,20 @@ export function* fetchTimeTransactions() {
   }
 }
 
+export function* fetchGenreTransactions() {
+  const transactions = yield call(request, `${apiURL}genre`);
+  // console.log(transactions);
+  if (!transactions.err) {
+    yield put(fetchGenreTransactionsSuccess(transactions.data.response.data));
+  } else {
+    yield put(fetchGenreTransactionsError(transactions.err));
+  }
+}
+
 export function* fetchUserInsightTransactions() {
   yield [
     call(fetchTimeTransactions),
+    call(fetchGenreTransactions),
   ];
 }
 

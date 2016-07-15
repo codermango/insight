@@ -46,4 +46,41 @@ router.route('/time')
     });
   });
 
+
+router.route('/genre')
+  .get((req, res) => {
+    const index = 'test_plejmo_user_data_genres_with_price';
+    const query = {
+      query: {
+        query_string: {
+          analyze_wildcard: true,
+          query: '*',
+        },
+      },
+      size: 0,
+      aggs: {
+        content: {
+          terms: {
+            field: 'genre.name',
+            size: 50,
+            order: {
+              amount: 'desc',
+            },
+          },
+          aggs: {
+            amount: {
+              sum: {
+                field: 'purchase_amount_sek_divided_by_genre_count',
+              },
+            },
+          },
+        },
+      },
+    };
+
+    esHelper.genreTransactions(query, index, (resp) => {
+      res.send({ response: { data: resp } });
+    });
+  });
+
 module.exports = router;

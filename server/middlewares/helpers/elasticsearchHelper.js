@@ -223,6 +223,20 @@ const aggsChildQuery = (query, index, cb) => {
   });
 };
 
+const genreTransactions = (query, index, cb) => {
+  client.search({
+    index,
+    body: query,
+  }).then((resp) => {
+    const dataFix = resp.aggregations.content.buckets.map(b => ({
+      x: b.key,
+      y: Number(b.amount.value.toFixed(2)),
+      label: Number(b.amount.value.toFixed(2)),
+    }));
+    cb(dataFix);
+  });
+};
+
 module.exports = {
   contentViews,
   topMovies,
@@ -231,4 +245,5 @@ module.exports = {
   timeTransactions,
   aggsQuery,
   aggsChildQuery,
+  genreTransactions,
 };
