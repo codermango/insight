@@ -106,9 +106,9 @@ class BarChart extends React.Component { // eslint-disable-line react/prefer-sta
     return (
       <div ref="chart" className={styles.barChart}>
         <VictoryChart
-          domainPadding={{ x: 20 }}
+          domainPadding={{ x: 10 }}
           padding={{
-            top: 5,
+            top: 15,
             bottom: 40,
             left: 40,
             right: 40,
@@ -150,6 +150,14 @@ class BarChart extends React.Component { // eslint-disable-line react/prefer-sta
                           }
                         ),
                       },
+                      {
+                        target: 'data',
+                        mutation: (props) => (
+                          {
+                            style: Object.assign({}, props.style, { fill: '#039BE5' }),
+                          }
+                        ),
+                      },
                     ],
                   onMouseOut: () =>
                     [
@@ -158,6 +166,14 @@ class BarChart extends React.Component { // eslint-disable-line react/prefer-sta
                         mutation: (props) => (
                           { style:
                             Object.assign({}, props.style, { display: 'none' }),
+                          }
+                        ),
+                      },
+                      {
+                        target: 'data',
+                        mutation: (props) => (
+                          {
+                            style: Object.assign({}, props.style, { fill: 'url(#GradientBar)' }),
                           }
                         ),
                       },
