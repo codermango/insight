@@ -169,6 +169,16 @@ const topPurchasedMovies = (cb) => {
       purchase_amount: Number(Number(movie.total_purchase_amount.value).toFixed(2)),
       thumbnailUrl: 'http://image.tmdb.org/t/p/w185/niYdnzkrtBduR5lKtfeLXKXNaTT.jpg',
     })));
+  });
+};
+
+const aggsQuery = (query, index, cb) => {
+  client.search({
+    index,
+    body: query,
+  })
+  .then((resp) => {
+    cb(aggsFixer(resp.aggregations.content.buckets));
   }, (err) => {
     cb(err.message);
   });
@@ -217,10 +227,26 @@ const timeTransactions = (cb) => {
     const eurList = buckets.map(item => item.currency.buckets[2].doc_count);
     const dkkList = buckets.map(item => item.currency.buckets[3].doc_count);
 
-    const sekTime = timeList.map((item, i) => ({ x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(), y: sekList[i], label: sekList[i] }));
-    const nokTime = timeList.map((item, i) => ({ x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(), y: nokList[i], label: nokList[i] }));
-    const eurTime = timeList.map((item, i) => ({ x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(), y: eurList[i], label: eurList[i] }));
-    const dkkTime = timeList.map((item, i) => ({ x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(), y: dkkList[i], label: dkkList[i] }));
+    const sekTime = timeList.map((item, i) => ({
+      x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(),
+      y: sekList[i],
+      label: sekList[i],
+    }));
+    const nokTime = timeList.map((item, i) => ({
+      x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(),
+      y: nokList[i],
+      label: nokList[i],
+    }));
+    const eurTime = timeList.map((item, i) => ({
+      x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(),
+      y: eurList[i],
+      label: eurList[i],
+    }));
+    const dkkTime = timeList.map((item, i) => ({
+      x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(),
+      y: dkkList[i],
+      label: dkkList[i],
+    }));
     const itemDataList = [
       { name: 'SEK', data: sekTime, color: 'hsl(0, 100%, 50%)' },
       { name: 'NOK', data: nokTime, color: 'hsl(32.72727272727273, 100%, 50%)' },
@@ -228,6 +254,17 @@ const timeTransactions = (cb) => {
       { name: 'DKK', data: dkkTime, color: 'hsl(98.18181818181819, 100%, 50%)' },
     ];
     cb(itemDataList);
+  });
+};
+
+const aggsChildQuery = (query, index, cb) => {
+  client.search({
+    index,
+    body: query,
+  })
+  .then((resp) => {
+    const dataFix = resp.aggregations.content.buckets.map(b => ({ x: b.key, y: b.child.value, label: b.child.value }));
+    cb(dataFix);
   }, (err) => {
     cb(err.message);
   });
@@ -239,4 +276,6 @@ module.exports = {
   timeGenres,
   topPurchasedMovies,
   timeTransactions,
+  aggsQuery,
+  aggsChildQuery,
 };

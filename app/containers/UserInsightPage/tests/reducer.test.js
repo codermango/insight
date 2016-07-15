@@ -25,7 +25,18 @@ describe('userInsightPageReducer', () => {
         data: false,
         error: false,
       }),
+      completeness: fromJS({
+        loading: false,
+        data: false,
+        error: false,
+      }),
+
       timeTransactions: fromJS({
+        loading: false,
+        data: false,
+        error: false,
+      }),
+      averageInteractions: fromJS({
         loading: false,
         data: false,
         error: false,
