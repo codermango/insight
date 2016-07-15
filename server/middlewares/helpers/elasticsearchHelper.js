@@ -184,76 +184,29 @@ const aggsQuery = (query, index, cb) => {
   });
 };
 
-const timeTransactions = (cb) => {
+const timeTransactions = (query, index, cb) => {
   client.search({
-    index: 'test_plejmo_transaction_with_currency_data',
-    body: {
-      query: {
-        query_string: {
-          query: '*',
-          analyze_wildcard: true,
-        },
-      },
-      size: 0,
-      aggs: {
-        content: {
-          terms: {
-            field: 'purchase_date_year_month',
-            size: 50,
-            order: {
-              _term: 'asc',
-            },
-          },
-          aggs: {
-            currency: {
-              terms: {
-                field: 'currency_code',
-                size: 5,
-                order: {
-                  _count: 'desc',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+    index,
+    body: query,
   }).then((resp) => {
     const buckets = resp.aggregations.content.buckets.filter(item => item.key > '201412' && item.key < '201601');
+    const dataObj = {};
+    for (const timeItem of buckets) {
+      const time = new Date(`${timeItem.key.slice(0, 4)}-${timeItem.key.slice(4)}`).getTime();
+      for (const currencyItem of timeItem.currency.buckets) {
+        if (currencyItem.key in dataObj) {
+          dataObj[currencyItem.key].push({ x: time, y: currencyItem.doc_count, label: currencyItem.doc_count });
+        } else {
+          dataObj[currencyItem.key] = [{ x: time, y: currencyItem.doc_count, label: currencyItem.doc_count }];
+        }
+      }
+    }
 
-    const timeList = buckets.map(item => item.key);
-    const sekList = buckets.map(item => item.currency.buckets[0].doc_count);
-    const nokList = buckets.map(item => item.currency.buckets[1].doc_count);
-    const eurList = buckets.map(item => item.currency.buckets[2].doc_count);
-    const dkkList = buckets.map(item => item.currency.buckets[3].doc_count);
+    const dataList = Object.keys(dataObj).map((key, i) => (
+      { name: key, data: dataObj[key], color: `hsl(${360 / buckets.length * i}, 100%, 50%)` }
+    ));
 
-    const sekTime = timeList.map((item, i) => ({
-      x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(),
-      y: sekList[i],
-      label: sekList[i],
-    }));
-    const nokTime = timeList.map((item, i) => ({
-      x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(),
-      y: nokList[i],
-      label: nokList[i],
-    }));
-    const eurTime = timeList.map((item, i) => ({
-      x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(),
-      y: eurList[i],
-      label: eurList[i],
-    }));
-    const dkkTime = timeList.map((item, i) => ({
-      x: new Date(`${item.slice(0, 4)}-${item.slice(4)}`).getTime(),
-      y: dkkList[i],
-      label: dkkList[i],
-    }));
-    const itemDataList = [
-      { name: 'SEK', data: sekTime, color: 'hsl(0, 100%, 50%)' },
-      { name: 'NOK', data: nokTime, color: 'hsl(32.72727272727273, 100%, 50%)' },
-      { name: 'EUR', data: eurTime, color: 'hsl(65.45454545454545, 100%, 50%)' },
-      { name: 'DKK', data: dkkTime, color: 'hsl(98.18181818181819, 100%, 50%)' },
-    ];
-    cb(itemDataList);
+    cb(dataList);
   });
 };
 
