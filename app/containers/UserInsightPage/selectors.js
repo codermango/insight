@@ -8,6 +8,11 @@ const selectUserInsight = () => state => state.get('userInsightPage');
 /**
  * Other specific selectors
  */
+const selectDateRange = () => createSelector(
+  selectUserInsight(),
+  (userInsightState) => userInsightState.get('dateRange')
+);
+
 const selectContentViews = () => createSelector(
   selectUserInsight(),
   (userInsightState) => userInsightState.get('contentViews')
@@ -46,6 +51,7 @@ const selectUserInsightPage = () => createSelector(
 export default selectUserInsightPage;
 export {
   selectUserInsight,
+  selectDateRange,
   selectContentViews,
   selectTopMovies,
   selectTimeGenres,

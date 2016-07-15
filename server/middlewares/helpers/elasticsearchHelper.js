@@ -92,39 +92,10 @@ const topMovies = (cb) => {
   });
 };
 
-const timeGenres = (cb) => {
+const timeGenres = (query, index, cb) => {
   client.search({
-    index: 'test_cmore_content_over_time_3',
-    body: {
-      size: 0,
-      query: {
-        query_string: {
-          query: '*',
-          analyze_wildcard: true,
-        },
-      },
-      aggs: {
-        content: {
-          date_histogram: {
-            field: 'dateTime',
-            interval: '1M',
-            time_zone: 'Europe/Berlin',
-            min_doc_count: 1,
-          },
-          aggs: {
-            genres: {
-              terms: {
-                field: 'genres.name',
-                size: 10,
-                order: {
-                  _count: 'desc',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+    index,
+    body: query,
   }).then((resp) => {
     cb(cummulativeFixer(resp.aggregations.content.buckets));
   }, (err) => {

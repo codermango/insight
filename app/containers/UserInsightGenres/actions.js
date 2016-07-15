@@ -5,9 +5,10 @@ import {
   FETCH_TIME_GENRES_ERROR,
 } from './constants';
 
-export function fetchUserInsightGenres() {
+export function fetchUserInsightGenres(dateRange) {
   return {
     type: FETCH_USER_INSIGHT_GENRES,
+    dateRange,
   };
 }
 

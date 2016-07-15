@@ -5,3 +5,13 @@
   display: flex;
   flex-direction: column;
 }
+
+.dataOptions {
+  padding-left: 0.4em;
+}
+
+.dateInput {
+  outline: none;
+  width: 6em;
+  font-size: 0.7em;
+}
