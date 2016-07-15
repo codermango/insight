@@ -127,6 +127,12 @@ class AreaChart extends React.Component { // eslint-disable-line react/prefer-st
           width={chartWidth}
           height={chartHeight}
           style={chartStyles.parent}
+          padding={{
+            top: 5,
+            bottom: 40,
+            left: 50,
+            right: 40,
+          }}
         >
           <linearGradient id="Gradient1" x1="0" x2="0" y1="0" y2="1">
             <stop className="stop1" stopColor="#039BE5" offset="0%" />

@@ -8,6 +8,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { fetchUserInsightGenres } from './actions';
 import {
@@ -27,16 +30,64 @@ export class UserInsightGenres extends React.Component { // eslint-disable-line 
     ]),
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      startDate: moment('2015-01-01'),
+      endDate: moment('2015-12-31'),
+    };
+    this.fetchData = this.fetchData.bind(this);
+    this.handleStartDateChange = this.handleStartDateChange.bind(this);
+    this.handleEndDateChange = this.handleEndDateChange.bind(this);
+  }
+
   componentWillMount() {
     if (!this.props.timeGenres.get('data')) {
-      this.props.fetchUserInsightGenres();
+      const dateRange = { startDate: this.state.startDate.toDate().getTime(), endDate: this.state.endDate.toDate().getTime() };
+      this.fetchData(dateRange);
     }
+  }
+
+  fetchData(dateRange) {
+    this.props.fetchUserInsightGenres(dateRange);
+  }
+
+  handleStartDateChange(date) {
+    this.setState({ startDate: date });
+    const dateRange = { startDate: date.toDate().getTime(), endDate: this.state.endDate.toDate().getTime() };
+    this.fetchData(dateRange);
+  }
+
+  handleEndDateChange(date) {
+    this.setState({ endDate: date });
+    const dateRange = { startDate: this.state.startDate.toDate().getTime(), endDate: date.toDate().getTime() };
+    this.fetchData(dateRange);
   }
 
   render() {
     const { timeGenres } = this.props;
     return (
       <div className={styles.userInsightGenres}>
+        <div className={styles.dataOptions}>
+          <DatePicker
+            className={styles.dateInput}
+            dateFormat="YYYY-MM-DD"
+            showYearDropdown
+            selected={this.state.startDate}
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
+            onChange={this.handleStartDateChange}
+          />
+          <DatePicker
+            className={styles.dateInput}
+            dateFormat="YYYY-MM-DD"
+            showYearDropdown
+            selected={this.state.endDate}
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
+            onChange={this.handleEndDateChange}
+          />
+        </div>
         <ChartCard
           ref="main_card"
           title="Genre Popularity"
@@ -56,7 +107,7 @@ export class UserInsightGenres extends React.Component { // eslint-disable-line 
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchUserInsightGenres: () => dispatch(fetchUserInsightGenres()),
+    fetchUserInsightGenres: (dateRange) => dispatch(fetchUserInsightGenres(dateRange)),
     dispatch,
   };
 }

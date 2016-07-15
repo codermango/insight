@@ -1,14 +1,16 @@
-import { take, call, put, cancel, fork } from 'redux-saga/effects';
+import { take, call, put, cancel, fork, select } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import request from 'utils/request';
 
 import { FETCH_USER_INSIGHT_GENRES } from './constants';
 import { fetchTimeGenresSuccess, fetchTimeGenresError } from './actions';
+import { selectDateRange } from 'containers/UserInsightPage/selectors';
 
 const apiURL = '/api/genres/';
 
 export function* fetchTimeGenres() {
-  const genres = yield call(request, `${apiURL}time`);
+  const dateRange = yield select(selectDateRange());
+  const genres = yield call(request, `${apiURL}time?startDate=${dateRange.startDate}&endDate=${dateRange.endDate}`);
 
   if (!genres.err) {
     yield put(fetchTimeGenresSuccess(genres.data.response.data));

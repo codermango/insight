@@ -165,7 +165,7 @@ class StackedLineChart extends React.Component {
           :
           ''
         }
-        {data ?
+        {data && data.length > 0 ?
           <VictoryChart
             width={chartWidth}
             height={chartHeight}
@@ -174,7 +174,7 @@ class StackedLineChart extends React.Component {
           >
             <VictoryAxis
               scale={scale}
-              tickCount={12}
+              tickCount={data.length}
               tickFormat={(x) => moment(x).format('MMMM')}
               style={chartStyles.xAxis}
             />
@@ -230,7 +230,7 @@ class StackedLineChart extends React.Component {
             )}
           </VictoryChart>
           :
-          ''
+          'No data'
         }
       </div>
     );

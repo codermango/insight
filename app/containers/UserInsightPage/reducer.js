@@ -39,6 +39,7 @@ import {
 
 
 const initialState = fromJS({
+  dateRange: false,
   contentViews: fromJS({
     loading: false,
     data: false,
@@ -113,6 +114,7 @@ function userInsightPageReducer(state = initialState, action) {
         .setIn(['topMovies', 'error'], action.error);
     case FETCH_USER_INSIGHT_GENRES:
       return state
+        .set('dateRange', action.dateRange)
         .setIn(['timeGenres', 'loading'], true)
         .setIn(['timeGenres', 'error'], false);
     case FETCH_TIME_GENRES_SUCCESS:

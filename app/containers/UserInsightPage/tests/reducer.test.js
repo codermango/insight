@@ -5,6 +5,7 @@ import { fromJS } from 'immutable';
 describe('userInsightPageReducer', () => {
   it('returns the initial state', () => {
     const initial = {
+      dateRange: false,
       contentViews: fromJS({
         loading: false,
         data: false,
