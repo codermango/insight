@@ -25,7 +25,7 @@ export function fetchUserInsightMovies() {
  * ContentViews actions
  *
  */
-export function fetchContentViews() {
+export function fetchContentViewsStart() {
   return {
     type: FETCH_CONTENT_VIEWS_START,
   };
@@ -50,7 +50,7 @@ export function fetchContentViewsError(error) {
  * TopMovies actions
  *
  */
-export function fetchTopMovies() {
+export function fetchTopMoviesStart() {
   return {
     type: FETCH_TOP_MOVIES_START,
   };

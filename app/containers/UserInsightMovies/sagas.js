@@ -3,7 +3,13 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import request from 'utils/request';
 
 import { FETCH_USER_INSIGHT_MOVIES } from './constants';
-import { fetchContentViewsSuccess, fetchContentViewsError, fetchTopMoviesSuccess } from './actions';
+import {
+  fetchContentViewsStart,
+  fetchContentViewsSuccess,
+  fetchContentViewsError,
+  fetchTopMoviesStart,
+  fetchTopMoviesSuccess,
+} from './actions';
 
 const apiURL = '/api/movies/';
 
@@ -34,6 +40,8 @@ export function* fetchTopMovies() {
 
 export function* fetchUserInsightMovies() {
   yield [
+    put(fetchContentViewsStart()),
+    put(fetchTopMoviesStart()),
     call(fetchContentViews),
     call(fetchTopMovies),
   ];
