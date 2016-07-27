@@ -8,25 +8,36 @@ import {
   fetchAnalysisActiveViewersError,
   fetchAnalysisChurnSuccess,
   fetchAnalysisChurnError,
+  fetchAnalysisAverageAmountSuccess,
+  fetchAnalysisAverageAmountError,
 } from './actions';
 
 const apiURL = '/api/analysis/';
 
 export function* fetchAnalysisActiveViewers() {
-  const activeViewersData = yield call(request, `${apiURL}activeviewers`);
-  if (!activeViewersData.err) {
-    yield put(fetchAnalysisActiveViewersSuccess(activeViewersData.data.response.data));
+  const data = yield call(request, `${apiURL}activeviewers`);
+  if (!data.err) {
+    yield put(fetchAnalysisActiveViewersSuccess(data.data.response.data));
   } else {
-    yield put(fetchAnalysisActiveViewersError(activeViewersData.err));
+    yield put(fetchAnalysisActiveViewersError(data.err));
   }
 }
 
 export function* fetchAnalysisChurn() {
-  const churnData = yield call(request, `${apiURL}churn`);
-  if (!churnData.err) {
-    yield put(fetchAnalysisChurnSuccess(churnData.data.response.data));
+  const data = yield call(request, `${apiURL}churn`);
+  if (!data.err) {
+    yield put(fetchAnalysisChurnSuccess(data.data.response.data));
   } else {
-    yield put(fetchAnalysisChurnError(churnData.err));
+    yield put(fetchAnalysisChurnError(data.err));
+  }
+}
+
+export function* fetchAnalysisAverageAmount() {
+  const data = yield call(request, `${apiURL}averageamount`);
+  if (!data.err) {
+    yield put(fetchAnalysisAverageAmountSuccess(data.data.response.data));
+  } else {
+    yield put(fetchAnalysisAverageAmountError(data.err));
   }
 }
 
@@ -34,6 +45,7 @@ export function* fetchAnalysis() {
   yield [
     call(fetchAnalysisActiveViewers),
     call(fetchAnalysisChurn),
+    call(fetchAnalysisAverageAmount),
   ];
 }
 

@@ -84,4 +84,40 @@ router.route('/churn')
   });
 
 
+router.route('/averageamount')
+  .get((req, res) => {
+    const index = 'test_cmore_user_interaction_views_over_time_1_chang';
+    const query = {
+      size: 0,
+      query: {
+        query_string: {
+          analyze_wildcard: true,
+          query: '*',
+        },
+      },
+      aggs: {
+        content: {
+          date_histogram: {
+            field: 'dateTime',
+            interval: '1w',
+            time_zone: 'Europe/Berlin',
+            min_doc_count: 1,
+          },
+          aggs: {
+            num_of_interactions: {
+              avg: {
+                field: 'numInteractionsFinishedCurrentWeek',
+              },
+            },
+          },
+        },
+      },
+    };
+
+    esHelper.averageAmountAnalysis(query, index, (resp) => {
+      res.send({ response: { data: resp } });
+    });
+  });
+
+
 module.exports = router;

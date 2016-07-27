@@ -1,6 +1,7 @@
 import {
   selectActiveViewers,
   selectChurn,
+  selectAverageAmount,
 } from '../selectors';
 import { fromJS } from 'immutable';
 import expect from 'expect';
@@ -29,5 +30,18 @@ describe('selectChurn', () => {
       },
     });
     expect(churnSelector(mockedState)).toEqual(churn);
+  });
+});
+
+describe('selectAverageAmount', () => {
+  const averageAmountSelector = selectAverageAmount();
+  it('should select averageAmount', () => {
+    const averageAmount = fromJS([]);
+    const mockedState = fromJS({
+      analysisPage: {
+        averageAmount,
+      },
+    });
+    expect(averageAmountSelector(mockedState)).toEqual(averageAmount);
   });
 });

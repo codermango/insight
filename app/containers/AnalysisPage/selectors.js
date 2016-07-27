@@ -19,6 +19,11 @@ const selectChurn = () => createSelector(
   (analysisState) => analysisState.get('churn')
 );
 
+const selectAverageAmount = () => createSelector(
+  selectAnalysisPageDomain(),
+  (analysisState) => analysisState.get('averageAmount')
+);
+
 /**
  * Default selector used by AnalysisPage
  */
@@ -33,4 +38,5 @@ export {
   selectAnalysisPageDomain,
   selectActiveViewers,
   selectChurn,
+  selectAverageAmount,
 };
