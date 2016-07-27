@@ -246,6 +246,25 @@ const churnAnalysis = (query, index, cb) => {
 };
 
 
+const averageAmountAnalysis = (query, index, cb) => {
+  client.search({
+    index,
+    body: query,
+  }).then((resp) => {
+    const buckets = resp.aggregations.content.buckets.slice(-3, -1);
+    const previousValue = buckets[0].num_of_interactions.value;
+    const currentValue = buckets[1].num_of_interactions.value;
+    const change = (currentValue - previousValue) / previousValue * 100;
+    const dataFix = {
+      pre_value: previousValue,
+      cur_value: currentValue,
+      change_rate: Number(change.toFixed(2)),
+    };
+    cb(dataFix);
+  });
+};
+
+
 module.exports = {
   contentViews,
   topMovies,
@@ -257,4 +276,5 @@ module.exports = {
   genreTransactions,
   activeviewersAnalysis,
   churnAnalysis,
+  averageAmountAnalysis,
 };

@@ -19,10 +19,16 @@ describe('<AnalysisPage />', () => {
       error: false,
       data: false,
     });
+    const averageAmount = fromJS({
+      loading: false,
+      error: false,
+      data: false,
+    });
     const renderedComponent = shallow(
       <AnalysisPage
         activeViewers={activeViewers}
         churn={churn}
+        averageAmount={averageAmount}
         fetchAnalysis={fetchAnalysis}
       />
     );

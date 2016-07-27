@@ -15,6 +15,11 @@ describe('analysisPageReducer', () => {
         data: false,
         error: false,
       },
+      averageAmount: {
+        loading: false,
+        data: false,
+        error: false,
+      },
     };
     expect(analysisPageReducer(undefined, {})).toEqual(fromJS(initialState));
   });
