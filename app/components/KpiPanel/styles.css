@@ -1,0 +1,10 @@
+.kpiPanel {
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.dataCardWrapper {
+  flex: 1;
+}
