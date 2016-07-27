@@ -208,6 +208,44 @@ const genreTransactions = (query, index, cb) => {
   });
 };
 
+const activeviewersAnalysis = (query, index, cb) => {
+  client.search({
+    index,
+    body: query,
+  }).then((resp) => {
+    const buckets = resp.aggregations.content.buckets.slice(-3, -1);
+    const previousNumOfActiveUsers = buckets[0].num_of_active_users.value;
+    const currentNumOfActiveUsers = buckets[1].num_of_active_users.value;
+    const change = (currentNumOfActiveUsers - previousNumOfActiveUsers) / previousNumOfActiveUsers * 100;
+    const dataFix = {
+      pre_value: previousNumOfActiveUsers,
+      cur_value: currentNumOfActiveUsers,
+      change_rate: Number(change.toFixed(2)),
+    };
+    cb(dataFix);
+  });
+};
+
+
+const churnAnalysis = (query, index, cb) => {
+  client.search({
+    index,
+    body: query,
+  }).then((resp) => {
+    const buckets = resp.aggregations.content.buckets.slice(-3, -1);
+    const previousChurn = buckets[0].num_of_current_lose_user.value / buckets[0].num_of_current_active_user.value * 100;
+    const currentChurn = buckets[1].num_of_current_lose_user.value / buckets[1].num_of_current_active_user.value * 100;
+    const change = (currentChurn - previousChurn) / previousChurn * 100;
+    const dataFix = {
+      pre_value: previousChurn,
+      cur_value: currentChurn,
+      change_rate: Number(change.toFixed(2)),
+    };
+    cb(dataFix);
+  });
+};
+
+
 module.exports = {
   contentViews,
   topMovies,
@@ -217,4 +255,6 @@ module.exports = {
   aggsQuery,
   aggsChildQuery,
   genreTransactions,
+  activeviewersAnalysis,
+  churnAnalysis,
 };

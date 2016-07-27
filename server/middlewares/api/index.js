@@ -2,6 +2,7 @@ const movies = require('./movies');
 const genres = require('./genres');
 const transactions = require('./transactions');
 const interactions = require('./interactions');
+const analysis = require('./analysis');
 
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -16,6 +17,7 @@ app.use('/movies', movies);
 app.use('/genres', genres);
 app.use('/transactions', transactions);
 app.use('/interactions', interactions);
+app.use('/analysis', analysis);
 
 app.on('mount', () => {
   // console.log('Api is available at %s', app.mountpath);

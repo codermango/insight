@@ -1,0 +1,43 @@
+.personasPanel {
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.poster {
+  width: 2.5vw;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-left: 20px solid #B3B3B3;
+  border-bottom: 10px solid transparent;
+}
+
+.triangleWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.mainData {
+  font-size: 1.5vw;
+  letter-spacing: -4px;
+}
+
+.subData {
+  font-size: 1.1vw;
+  letter-spacing: -4px;
+}
+
+.description {
+  white-space: pre-wrap;
+  text-align: left;
+}
+
+.statusImage {
+  width: 2vw;
+}
