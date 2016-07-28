@@ -15,6 +15,9 @@ import {
   FETCH_ANALYSIS_AVERAGEAMOUNT_START,
   FETCH_ANALYSIS_AVERAGEAMOUNT_SUCCESS,
   FETCH_ANALYSIS_AVERAGEAMOUNT_ERROR,
+  FETCH_ANALYSIS_AVERAGEVIEWTIME_START,
+  FETCH_ANALYSIS_AVERAGEVIEWTIME_SUCCESS,
+  FETCH_ANALYSIS_AVERAGEVIEWTIME_ERROR,
 } from './constants';
 
 export function fetchAnalysis() {
@@ -88,6 +91,29 @@ export function fetchAnalysisAverageAmountSuccess(data) {
 export function fetchAnalysisAverageAmountError(error) {
   return {
     type: FETCH_ANALYSIS_AVERAGEAMOUNT_ERROR,
+    error,
+  };
+}
+
+/*
+ Average View Time Action
+ */
+export function fetchAnalysisAverageViewTimeStart() {
+  return {
+    type: FETCH_ANALYSIS_AVERAGEVIEWTIME_START,
+  };
+}
+
+export function fetchAnalysisAverageViewTimeSuccess(data) {
+  return {
+    type: FETCH_ANALYSIS_AVERAGEVIEWTIME_SUCCESS,
+    data,
+  };
+}
+
+export function fetchAnalysisAverageViewTimeError(error) {
+  return {
+    type: FETCH_ANALYSIS_AVERAGEVIEWTIME_ERROR,
     error,
   };
 }

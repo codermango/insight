@@ -10,6 +10,7 @@ import {
   selectActiveViewers,
   selectChurn,
   selectAverageAmount,
+  selectAverageViewTime,
 } from './selectors';
 import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
@@ -50,6 +51,10 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
       React.PropTypes.object,
       React.PropTypes.bool,
     ]),
+    averageViewTime: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.bool,
+    ]),
   };
 
   componentWillMount() {
@@ -62,6 +67,7 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
       activeViewers,
       churn,
       averageAmount,
+      averageViewTime,
     } = this.props;
     if (!activeViewers.get('data')) {
       return <div></div>;
@@ -72,7 +78,7 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
         { title: 'Active Viewers', number: activeViewers.get('data').cur_value, change: activeViewers.get('data').change_rate },
         { title: 'Churn', number: churn.get('data').cur_value, change: churn.get('data').change_rate },
         { title: 'Average Amount', number: averageAmount.get('data').cur_value, change: averageAmount.get('data').change_rate },
-        { title: 'Average Viewing Time', number: 234.32, change: 45.6 },
+        { title: 'Average Viewing Time', number: averageViewTime.get('data').cur_value, change: averageViewTime.get('data').change_rate },
         { title: 'ARPU', number: 37, change: 7 },
       ],
       personas: [
@@ -130,6 +136,7 @@ const mapStateToProps = createStructuredSelector({
   activeViewers: selectActiveViewers(),
   churn: selectChurn(),
   averageAmount: selectAverageAmount(),
+  averageViewTime: selectAverageViewTime(),
 });
 
 function mapDispatchToProps(dispatch) {

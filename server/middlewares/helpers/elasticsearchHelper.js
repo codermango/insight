@@ -265,6 +265,25 @@ const averageAmountAnalysis = (query, index, cb) => {
 };
 
 
+const averageViewTimeAnalysis = (query, index, cb) => {
+  client.search({
+    index,
+    body: query,
+  }).then((resp) => {
+    const buckets = resp.aggregations.content.buckets.slice(-3, -1);
+    const previousValue = buckets[0].current_value.value / 60;
+    const currentValue = buckets[1].current_value.value / 60;
+    const change = (currentValue - previousValue) / previousValue * 100;
+    const dataFix = {
+      pre_value: previousValue,
+      cur_value: currentValue,
+      change_rate: Number(change.toFixed(2)),
+    };
+    cb(dataFix);
+  });
+};
+
+
 module.exports = {
   contentViews,
   topMovies,
@@ -277,4 +296,5 @@ module.exports = {
   activeviewersAnalysis,
   churnAnalysis,
   averageAmountAnalysis,
+  averageViewTimeAnalysis,
 };
