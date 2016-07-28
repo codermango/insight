@@ -25,6 +25,11 @@ describe('analysisPageReducer', () => {
         data: false,
         error: false,
       },
+      personasActiveViewers: {
+        loading: false,
+        data: false,
+        error: false,
+      },
     };
     expect(analysisPageReducer(undefined, {})).toEqual(fromJS(initialState));
   });

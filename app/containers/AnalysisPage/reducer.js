@@ -15,6 +15,8 @@ import {
   FETCH_ANALYSIS_AVERAGEAMOUNT_ERROR,
   FETCH_ANALYSIS_AVERAGEVIEWTIME_SUCCESS,
   FETCH_ANALYSIS_AVERAGEVIEWTIME_ERROR,
+  FETCH_ANALYSIS_PERSONAS_ACTIVEVIEWERS_SUCCESS,
+  FETCH_ANALYSIS_PERSONAS_ACTIVEVIEWERS_ERROR,
 } from './constants';
 
 const initialState = fromJS({
@@ -38,6 +40,11 @@ const initialState = fromJS({
     data: false,
     error: false,
   },
+  personasActiveViewers: {
+    loading: false,
+    data: false,
+    error: false,
+  },
 });
 
 function analysisPageReducer(state = initialState, action) {
@@ -51,7 +58,9 @@ function analysisPageReducer(state = initialState, action) {
         .setIn(['averageAmount', 'loading'], true)
         .setIn(['averageAmount', 'error'], false)
         .setIn(['averageViewTime', 'loading'], true)
-        .setIn(['averageViewTime', 'error'], false);
+        .setIn(['averageViewTime', 'error'], false)
+        .setIn(['personasActiveViewers', 'loading'], true)
+        .setIn(['personasActiveViewers', 'error'], false);
     case FETCH_ANALYSIS_ACTIVEVIEWERS_SUCCESS:
       return state
         .setIn(['activeViewers', 'loading'], false)
@@ -88,6 +97,15 @@ function analysisPageReducer(state = initialState, action) {
       return state
         .setIn(['averageViewTime', 'loading'], false)
         .setIn(['averageViewTime', 'error'], action.error);
+    case FETCH_ANALYSIS_PERSONAS_ACTIVEVIEWERS_SUCCESS:
+      return state
+        .setIn(['personasActiveViewers', 'loading'], false)
+        .setIn(['personasActiveViewers', 'data'], action.data)
+        .setIn(['personasActiveViewers', 'error'], false);
+    case FETCH_ANALYSIS_PERSONAS_ACTIVEVIEWERS_ERROR:
+      return state
+        .setIn(['personasActiveViewers', 'loading'], false)
+        .setIn(['personasActiveViewers', 'error'], action.error);
     default:
       return state;
   }

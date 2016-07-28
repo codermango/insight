@@ -18,6 +18,9 @@ import {
   FETCH_ANALYSIS_AVERAGEVIEWTIME_START,
   FETCH_ANALYSIS_AVERAGEVIEWTIME_SUCCESS,
   FETCH_ANALYSIS_AVERAGEVIEWTIME_ERROR,
+  FETCH_ANALYSIS_PERSONAS_ACTIVEVIEWERS_START,
+  FETCH_ANALYSIS_PERSONAS_ACTIVEVIEWERS_SUCCESS,
+  FETCH_ANALYSIS_PERSONAS_ACTIVEVIEWERS_ERROR,
 } from './constants';
 
 export function fetchAnalysis() {
@@ -114,6 +117,29 @@ export function fetchAnalysisAverageViewTimeSuccess(data) {
 export function fetchAnalysisAverageViewTimeError(error) {
   return {
     type: FETCH_ANALYSIS_AVERAGEVIEWTIME_ERROR,
+    error,
+  };
+}
+
+/*
+ Personas Active Viewers Action
+ */
+export function fetchAnalysisPersonasActiveViewersStart() {
+  return {
+    type: FETCH_ANALYSIS_PERSONAS_ACTIVEVIEWERS_START,
+  };
+}
+
+export function fetchAnalysisPersonasActiveViewersSuccess(data) {
+  return {
+    type: FETCH_ANALYSIS_PERSONAS_ACTIVEVIEWERS_SUCCESS,
+    data,
+  };
+}
+
+export function fetchAnalysisPersonasActiveViewersError(error) {
+  return {
+    type: FETCH_ANALYSIS_PERSONAS_ACTIVEVIEWERS_ERROR,
     error,
   };
 }

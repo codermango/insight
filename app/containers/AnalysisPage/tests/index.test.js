@@ -24,11 +24,17 @@ describe('<AnalysisPage />', () => {
       error: false,
       data: false,
     });
+    const personasActiveViewers = fromJS({
+      loading: false,
+      error: false,
+      data: false,
+    });
     const renderedComponent = shallow(
       <AnalysisPage
         activeViewers={activeViewers}
         churn={churn}
         averageAmount={averageAmount}
+        personasActiveViewers={personasActiveViewers}
         fetchAnalysis={fetchAnalysis}
       />
     );
