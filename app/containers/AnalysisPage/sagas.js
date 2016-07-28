@@ -10,6 +10,8 @@ import {
   fetchAnalysisChurnError,
   fetchAnalysisAverageAmountSuccess,
   fetchAnalysisAverageAmountError,
+  fetchAnalysisAverageViewTimeSuccess,
+  fetchAnalysisAverageViewTimeError,
 } from './actions';
 
 const apiURL = '/api/analysis/';
@@ -41,11 +43,21 @@ export function* fetchAnalysisAverageAmount() {
   }
 }
 
+export function* fetchAnalysisAverageViewTime() {
+  const data = yield call(request, `${apiURL}averageviewtime`);
+  if (!data.err) {
+    yield put(fetchAnalysisAverageViewTimeSuccess(data.data.response.data));
+  } else {
+    yield put(fetchAnalysisAverageViewTimeError(data.err));
+  }
+}
+
 export function* fetchAnalysis() {
   yield [
     call(fetchAnalysisActiveViewers),
     call(fetchAnalysisChurn),
     call(fetchAnalysisAverageAmount),
+    call(fetchAnalysisAverageViewTime),
   ];
 }
 
