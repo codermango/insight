@@ -155,6 +155,19 @@ const aggsQuery = (query, index, cb) => {
   });
 };
 
+const aggsChildQuery = (query, index, cb) => {
+  client.search({
+    index,
+    body: query,
+  })
+  .then((resp) => {
+    const dataFix = resp.aggregations.content.buckets.map(b => ({ x: b.key, y: b.child.value, label: b.child.value }));
+    cb(dataFix);
+  }, (err) => {
+    cb(err.message);
+  });
+};
+
 const timeTransactions = (query, index, cb) => {
   client.search({
     index,
@@ -174,23 +187,10 @@ const timeTransactions = (query, index, cb) => {
     }
 
     const dataList = Object.keys(dataObj).map((key, i) => (
-      { name: key, data: dataObj[key], color: `hsl(${360 / buckets.length * i}, 100%, 50%)` }
+    { name: key, data: dataObj[key], color: `hsl(${360 / buckets.length * i}, 100%, 50%)` }
     ));
 
     cb(dataList);
-  });
-};
-
-const aggsChildQuery = (query, index, cb) => {
-  client.search({
-    index,
-    body: query,
-  })
-  .then((resp) => {
-    const dataFix = resp.aggregations.content.buckets.map(b => ({ x: b.key, y: b.child.value, label: b.child.value }));
-    cb(dataFix);
-  }, (err) => {
-    cb(err.message);
   });
 };
 
@@ -214,12 +214,12 @@ const activeviewersAnalysis = (query, index, cb) => {
     body: query,
   }).then((resp) => {
     const buckets = resp.aggregations.content.buckets.slice(-3, -1);
-    const previousNumOfActiveUsers = buckets[0].num_of_active_users.value;
-    const currentNumOfActiveUsers = buckets[1].num_of_active_users.value;
-    const change = (currentNumOfActiveUsers - previousNumOfActiveUsers) / previousNumOfActiveUsers * 100;
+    const previousValue = buckets[0].num_of_active_users.value;
+    const currentValue = buckets[1].num_of_active_users.value;
+    const change = (currentValue - previousValue) / previousValue * 100;
     const dataFix = {
-      pre_value: previousNumOfActiveUsers,
-      cur_value: currentNumOfActiveUsers,
+      pre_value: previousValue,
+      cur_value: currentValue,
       change_rate: Number(change.toFixed(2)),
     };
     cb(dataFix);
@@ -233,12 +233,12 @@ const churnAnalysis = (query, index, cb) => {
     body: query,
   }).then((resp) => {
     const buckets = resp.aggregations.content.buckets.slice(-3, -1);
-    const previousChurn = buckets[0].num_of_current_lose_user.value / buckets[0].num_of_current_active_user.value * 100;
-    const currentChurn = buckets[1].num_of_current_lose_user.value / buckets[1].num_of_current_active_user.value * 100;
-    const change = (currentChurn - previousChurn) / previousChurn * 100;
+    const previousValue = buckets[0].num_of_current_lose_user.value / buckets[0].num_of_current_active_user.value * 100;
+    const currentValue = buckets[1].num_of_current_lose_user.value / buckets[1].num_of_current_active_user.value * 100;
+    const change = (currentValue - previousValue) / previousValue * 100;
     const dataFix = {
-      pre_value: previousChurn,
-      cur_value: currentChurn,
+      pre_value: previousValue,
+      cur_value: currentValue,
       change_rate: Number(change.toFixed(2)),
     };
     cb(dataFix);
