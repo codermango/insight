@@ -29,6 +29,11 @@ const selectAverageViewTime = () => createSelector(
   (analysisState) => analysisState.get('averageViewTime')
 );
 
+const selectPersonasActiveViewers = () => createSelector(
+  selectAnalysisPageDomain(),
+  (analysisState) => analysisState.get('personasActiveViewers')
+);
+
 /**
  * Default selector used by AnalysisPage
  */
@@ -45,4 +50,5 @@ export {
   selectChurn,
   selectAverageAmount,
   selectAverageViewTime,
+  selectPersonasActiveViewers,
 };

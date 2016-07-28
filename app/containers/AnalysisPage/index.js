@@ -11,6 +11,7 @@ import {
   selectChurn,
   selectAverageAmount,
   selectAverageViewTime,
+  selectPersonasActiveViewers,
 } from './selectors';
 import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
@@ -55,6 +56,10 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
       React.PropTypes.object,
       React.PropTypes.bool,
     ]),
+    personasActiveViewers: React.PropTypes.oneOfType([
+      React.PropTypes.object,
+      React.PropTypes.bool,
+    ]),
   };
 
   componentWillMount() {
@@ -68,6 +73,7 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
       churn,
       averageAmount,
       averageViewTime,
+      personasActiveViewers,
     } = this.props;
     if (!activeViewers.get('data')) {
       return <div></div>;
@@ -83,7 +89,7 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
       ],
       personas: [
         {
-          percentage: 23,
+          percentage: personasActiveViewers.get('data').persona0,
           status: `${happySmiley}`,
           arpu: { data: 12.5, change: 12.3 },
           avgViewingTime: { data: 54.5, change: -9.8 },
@@ -92,7 +98,7 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
         },
 
         {
-          percentage: 45,
+          percentage: personasActiveViewers.get('data').persona1,
           status: `${happySmiley}`,
           arpu: { data: 67.5, change: 12.3 },
           avgViewingTime: { data: 54.5, change: -9.8 },
@@ -101,7 +107,7 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
         },
 
         {
-          percentage: 17,
+          percentage: personasActiveViewers.get('data').persona2,
           status: `${unhappySmiley}`,
           arpu: { data: 27.5, change: -52.3 },
           avgViewingTime: { data: 54.5, change: -9.8 },
@@ -110,7 +116,7 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
         },
 
         {
-          percentage: 49,
+          percentage: personasActiveViewers.get('data').persona3,
           status: `${happySmiley}`,
           arpu: { data: 29.5, change: 43.3 },
           avgViewingTime: { data: 12.9, change: -9.8 },
@@ -137,6 +143,7 @@ const mapStateToProps = createStructuredSelector({
   churn: selectChurn(),
   averageAmount: selectAverageAmount(),
   averageViewTime: selectAverageViewTime(),
+  personasActiveViewers: selectPersonasActiveViewers(),
 });
 
 function mapDispatchToProps(dispatch) {

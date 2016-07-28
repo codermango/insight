@@ -12,6 +12,8 @@ import {
   fetchAnalysisAverageAmountError,
   fetchAnalysisAverageViewTimeSuccess,
   fetchAnalysisAverageViewTimeError,
+  fetchAnalysisPersonasActiveViewersSuccess,
+  fetchAnalysisPersonasActiveViewersError,
 } from './actions';
 
 const apiURL = '/api/analysis/';
@@ -52,12 +54,22 @@ export function* fetchAnalysisAverageViewTime() {
   }
 }
 
+export function* fetchAnalysisPersonasActiveViewers() {
+  const data = yield call(request, `${apiURL}personas/activeviewers`);
+  if (!data.err) {
+    yield put(fetchAnalysisPersonasActiveViewersSuccess(data.data.response.data));
+  } else {
+    yield put(fetchAnalysisPersonasActiveViewersError(data.err));
+  }
+}
+
 export function* fetchAnalysis() {
   yield [
     call(fetchAnalysisActiveViewers),
     call(fetchAnalysisChurn),
     call(fetchAnalysisAverageAmount),
     call(fetchAnalysisAverageViewTime),
+    call(fetchAnalysisPersonasActiveViewers),
   ];
 }
 

@@ -284,6 +284,23 @@ const averageViewTimeAnalysis = (query, index, cb) => {
 };
 
 
+const personasActiveViewersAnalysis = (query, index, cb) => {
+  client.search({
+    index,
+    body: query,
+  }).then((resp) => {
+    const buckets = resp.aggregations.content.buckets.slice(-2, -1);
+    const personasBuckets = buckets[0].content.buckets;
+    const sum = personasBuckets.map(item => item.data.value).reduce((x, y) => x + y, 0);
+    const dataFix = {};
+    for (const item of personasBuckets) {
+      dataFix[`persona${item.key}`] = Number((item.data.value / sum * 100).toFixed(2));
+    }
+    cb(dataFix);
+  });
+};
+
+
 module.exports = {
   contentViews,
   topMovies,
@@ -297,4 +314,5 @@ module.exports = {
   churnAnalysis,
   averageAmountAnalysis,
   averageViewTimeAnalysis,
+  personasActiveViewersAnalysis,
 };
