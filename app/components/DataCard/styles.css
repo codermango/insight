@@ -2,21 +2,27 @@
   margin: 10px;
   padding: 20px;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
 }
 
 .number {
-  text-align: right;
+  align-self: flex-end;
   font-size: 2vw;
   font-weight: bold;
 }
 
 .description {
-  text-align: right;
+  align-self: flex-end;
   font-size: 1vw;
 }
 
 .title {
+  align-self: flex-start;
   text-transform: uppercase;
   margin: 0;
   font-size: 1vw;
+  font-weight: 800;
 }
