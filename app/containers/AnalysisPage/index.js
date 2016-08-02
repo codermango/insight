@@ -84,7 +84,7 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
         { title: 'Active Viewers', number: activeViewers.get('data').cur_value, change: activeViewers.get('data').change_rate },
         { title: 'Churn', number: churn.get('data').cur_value, change: churn.get('data').change_rate },
         { title: 'Average Amount', number: averageAmount.get('data').cur_value, change: averageAmount.get('data').change_rate },
-        { title: 'Average Viewing Time', number: averageViewTime.get('data').cur_value, change: averageViewTime.get('data').change_rate },
+        { title: 'Average View Time', number: averageViewTime.get('data').cur_value, change: averageViewTime.get('data').change_rate },
         { title: 'ARPU', number: 37, change: 7 },
       ],
       personas: [

@@ -43,7 +43,7 @@ function PersonasPanel(props) {
             <TableHeaderColumn style={tableStyles.headerColumn}>%</TableHeaderColumn>
             <TableHeaderColumn style={tableStyles.headerColumn}>Status</TableHeaderColumn>
             <TableHeaderColumn style={tableStyles.headerColumn}>ARPU</TableHeaderColumn>
-            <TableHeaderColumn style={tableStyles.headerColumn}>Average Viewing Time</TableHeaderColumn>
+            <TableHeaderColumn style={tableStyles.headerColumn}>Average View Time</TableHeaderColumn>
             <TableHeaderColumn style={tableStyles.headerColumn}>Top titles</TableHeaderColumn>
             <TableHeaderColumn style={tableStyles.headerColumn}>Description</TableHeaderColumn>
             <TableHeaderColumn style={tableStyles.headerColumn}>More Info</TableHeaderColumn>
