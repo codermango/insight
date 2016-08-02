@@ -151,6 +151,14 @@ class NormalBarChart extends React.Component { // eslint-disable-line react/pref
                           }
                         ),
                       },
+                      {
+                        target: 'data',
+                        mutation: (props) => (
+                          {
+                            style: Object.assign({}, props.style, { fill: '#039BE5' }),
+                          }
+                        ),
+                      },
                     ],
                   onMouseOut: () =>
                     [
@@ -159,6 +167,14 @@ class NormalBarChart extends React.Component { // eslint-disable-line react/pref
                         mutation: (props) => (
                           { style:
                             Object.assign({}, props.style, { display: 'none' }),
+                          }
+                        ),
+                      },
+                      {
+                        target: 'data',
+                        mutation: (props) => (
+                          { style:
+                            Object.assign({}, props.style, { fill: 'url(#GradientBar)' }),
                           }
                         ),
                       },
