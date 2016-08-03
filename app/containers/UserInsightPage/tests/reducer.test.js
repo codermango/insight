@@ -41,11 +41,6 @@ describe('userInsightPageReducer', () => {
         data: false,
         error: false,
       }),
-      genreTransactions: fromJS({
-        loading: false,
-        data: false,
-        error: false,
-      }),
     };
     expect(userInsightPageReducer(undefined, {})).toEqual(fromJS(initial));
   });
