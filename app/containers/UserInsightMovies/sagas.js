@@ -4,7 +4,6 @@ import request from 'utils/request';
 
 import { FETCH_USER_INSIGHT_MOVIES } from './constants';
 import {
-  fetchTopPurchasedMoviesSuccess,
   fetchContentViewsStart,
   fetchContentViewsSuccess,
   fetchContentViewsError,
@@ -39,21 +38,12 @@ export function* fetchTopMovies() {
   }
 }
 
-export function* fetchTopPurchasedMovies() {
-  const topMovies = yield call(request, `${apiURL}toppurchasedmovies`);
-
-  if (!topMovies.err) {
-    yield put(fetchTopPurchasedMoviesSuccess(topMovies.data.response.data));
-  }
-}
-
 export function* fetchUserInsightMovies() {
   yield [
     put(fetchContentViewsStart()),
     put(fetchTopMoviesStart()),
     call(fetchContentViews),
     call(fetchTopMovies),
-    call(fetchTopPurchasedMovies),
   ];
 }
 

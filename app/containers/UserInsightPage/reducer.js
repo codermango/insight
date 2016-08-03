@@ -12,9 +12,6 @@ import {
   FETCH_TOP_MOVIES_START,
   FETCH_TOP_MOVIES_SUCCESS,
   FETCH_TOP_MOVIES_ERROR,
-  FETCH_TOP_PURCHASED_MOVIES_START,
-  FETCH_TOP_PURCHASED_MOVIES_SUCCESS,
-  FETCH_TOP_PURCHASED_MOVIES_ERROR,
 } from 'containers/UserInsightMovies/constants';
 import {
   FETCH_USER_INSIGHT_GENRES,
@@ -25,8 +22,6 @@ import {
   FETCH_USER_INSIGHT_TRANSACTIONS,
   FETCH_TIME_TRANSACTIONS_SUCCESS,
   FETCH_TIME_TRANSACTIONS_ERROR,
-  FETCH_GENRE_TRANSACTIONS_SUCCESS,
-  FETCH_GENRE_TRANSACTIONS_ERROR,
 } from 'containers/UserInsightTransactions/constants';
 import {
   FETCH_COMPLETENESS_START,
@@ -55,12 +50,6 @@ const initialState = fromJS({
     data: false,
     error: false,
   }),
-
-  topPurchasedMovies: fromJS({
-    loading: false,
-    data: false,
-    error: false,
-  }),
   completeness: fromJS({
     loading: false,
     data: false,
@@ -73,11 +62,6 @@ const initialState = fromJS({
     error: false,
   }),
   averageInteractions: fromJS({
-    loading: false,
-    data: false,
-    error: false,
-  }),
-  genreTransactions: fromJS({
     loading: false,
     data: false,
     error: false,
@@ -126,20 +110,6 @@ function userInsightPageReducer(state = initialState, action) {
       return state
         .setIn(['timeGenres', 'loading'], false)
         .setIn(['timeGenres', 'error'], action.error);
-
-    case FETCH_TOP_PURCHASED_MOVIES_START:
-      return state
-        .setIn(['topPurchasedMovies', 'loading'], true)
-        .setIn(['topPurchasedMovies', 'error'], false);
-    case FETCH_TOP_PURCHASED_MOVIES_SUCCESS:
-      return state
-        .setIn(['topPurchasedMovies', 'loading'], false)
-        .setIn(['topPurchasedMovies', 'data'], action.data)
-        .setIn(['topPurchasedMovies', 'error'], false);
-    case FETCH_TOP_PURCHASED_MOVIES_ERROR:
-      return state
-        .setIn(['topPurchasedMovies', 'loading'], false)
-        .setIn(['topPurchasedMovies', 'error'], action.error);
     case FETCH_USER_INSIGHT_TRANSACTIONS:
       return state
         .setIn(['timeTransactions', 'loading'], true)
@@ -153,15 +123,6 @@ function userInsightPageReducer(state = initialState, action) {
       return state
         .setIn(['timeTransactions', 'loading'], false)
         .setIn(['timeTransactions', 'error'], action.error);
-    case FETCH_GENRE_TRANSACTIONS_SUCCESS:
-      return state
-        .setIn(['genreTransactions', 'loading'], false)
-        .setIn(['genreTransactions', 'data'], action.data)
-        .setIn(['genreTransactions', 'error'], false);
-    case FETCH_GENRE_TRANSACTIONS_ERROR:
-      return state
-        .setIn(['genreTransactions', 'loading'], false)
-        .setIn(['genreTransactions', 'error'], action.error);
 
     case FETCH_COMPLETENESS_START:
       return state

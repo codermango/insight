@@ -13,13 +13,11 @@ import { fetchUserInsightMovies } from './actions';
 import {
   selectContentViews,
   selectTopMovies,
-  selectTopPurchasedMovies,
 } from 'containers/UserInsightPage/selectors';
 
 import ChartCard from 'components/ChartCard';
 import AreaChart from 'components/AreaChart';
 import TopMovieList from 'components/TopMovieList';
-import MovieList from 'components/MovieList';
 
 export class UserInsightMovies extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -33,10 +31,6 @@ export class UserInsightMovies extends React.Component { // eslint-disable-line 
       React.PropTypes.object,
       React.PropTypes.bool,
     ]),
-    topPurchasedMovies: React.PropTypes.oneOfType([
-      React.PropTypes.object,
-      React.PropTypes.bool,
-    ]),
   }
 
   componentWillMount() {
@@ -44,7 +38,7 @@ export class UserInsightMovies extends React.Component { // eslint-disable-line 
   }
 
   render() {
-    const { contentViews, topMovies, topPurchasedMovies } = this.props;
+    const { contentViews, topMovies } = this.props;
     return (
       <div className={styles.userInsightMovies}>
         <div ref="main_chart" className={styles.main_chart}>
@@ -75,20 +69,7 @@ export class UserInsightMovies extends React.Component { // eslint-disable-line 
               ''
             }
           </ChartCard>
-          <ChartCard
-            title="Top Purchased Movies"
-            description="All time most purchased movies (SEK)"
-            loading={topPurchasedMovies.get('loading')}
-          >
-          {topPurchasedMovies.get('data') ?
-            <MovieList
-              topMovies={topPurchasedMovies.get('data')}
-              sortBy="purchase_amount"
-            />
-            :
-            ''
-          }
-          </ChartCard>
+          <ChartCard />
           <ChartCard />
         </div>
       </div>
@@ -106,7 +87,6 @@ function mapDispatchToProps(dispatch) {
 const mapStateToProps = createStructuredSelector({
   contentViews: selectContentViews(),
   topMovies: selectTopMovies(),
-  topPurchasedMovies: selectTopPurchasedMovies(),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserInsightMovies);

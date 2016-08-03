@@ -38,11 +38,6 @@ const selectTimeTransactions = () => createSelector(
   (userInsightState) => userInsightState.get('timeTransactions')
 );
 
-const selectGenreTransactions = () => createSelector(
-  selectUserInsight(),
-  (userInsightState) => userInsightState.get('genreTransactions')
-);
-
 const selectCompleteness = () => createSelector(
   selectUserInsight(),
   (userInsightState) => userInsightState.get('completeness')
@@ -72,7 +67,6 @@ export {
   selectTimeGenres,
   selectTopPurchasedMovies,
   selectTimeTransactions,
-  selectGenreTransactions,
   selectCompleteness,
   selectAverageInteractions,
 };
