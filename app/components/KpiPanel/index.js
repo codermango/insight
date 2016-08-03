@@ -15,21 +15,11 @@ function KpiPanel(props) {
   const { data } = props;
   return (
     <div className={styles.kpiPanel}>
-      <div className={styles.dataCardWrapper}>
-        <DataCard data={data[0]} />
-      </div>
-      <div className={styles.dataCardWrapper}>
-        <DataCard data={data[1]} unit="%" isReverseColor={Boolean(true)} />
-      </div>
-      <div className={styles.dataCardWrapper}>
-        <DataCard data={data[2]} unit="SEK" />
-      </div>
-      <div className={styles.dataCardWrapper}>
-        <DataCard data={data[3]} unit="MIN" />
-      </div>
-      <div className={styles.dataCardWrapper}>
-        <DataChartCard />
-      </div>
+      <DataCard data={data[0]} />
+      <DataCard data={data[1]} unit="%" isReverseColor={Boolean(true)} />
+      <DataCard data={data[2]} unit="SEK" />
+      <DataCard data={data[3]} unit="MIN" />
+      <DataChartCard />
     </div>
   );
 }
