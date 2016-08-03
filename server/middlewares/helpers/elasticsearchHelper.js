@@ -103,46 +103,6 @@ const timeGenres = (query, index, cb) => {
   });
 };
 
-const topPurchasedMovies = (cb) => {
-  client.search({
-    index: 'test_plejmo_transaction_data',
-    body: {
-      query: {
-        query_string: {
-          query: '*',
-          analyze_wildcard: true,
-        },
-      },
-      size: 0,
-      aggs: {
-        content: {
-          terms: {
-            field: 'imdb_id',
-            size: 10,
-            order: {
-              total_purchase_amount: 'desc',
-            },
-          },
-          aggs: {
-            total_purchase_amount: {
-              sum: {
-                field: 'purchase_amount_sek',
-              },
-            },
-          },
-        },
-      },
-    },
-  }).then((resp) => {
-    cb(resp.aggregations.content.buckets.map(movie => ({
-      vionelID: movie.key,
-      name: movie.key,
-      purchase_amount: Number(Number(movie.total_purchase_amount.value).toFixed(2)),
-      thumbnailUrl: 'http://image.tmdb.org/t/p/w185/niYdnzkrtBduR5lKtfeLXKXNaTT.jpg',
-    })));
-  });
-};
-
 const aggsQuery = (query, index, cb) => {
   client.search({
     index,
@@ -191,20 +151,6 @@ const timeTransactions = (query, index, cb) => {
     ));
 
     cb(dataList);
-  });
-};
-
-const genreTransactions = (query, index, cb) => {
-  client.search({
-    index,
-    body: query,
-  }).then((resp) => {
-    const dataFix = resp.aggregations.content.buckets.map(b => ({
-      x: b.key,
-      y: Number(b.amount.value.toFixed(2)),
-      label: Number(b.amount.value.toFixed(2)),
-    }));
-    cb(dataFix);
   });
 };
 
@@ -305,11 +251,9 @@ module.exports = {
   contentViews,
   topMovies,
   timeGenres,
-  topPurchasedMovies,
   timeTransactions,
   aggsQuery,
   aggsChildQuery,
-  genreTransactions,
   activeviewersAnalysis,
   churnAnalysis,
   averageAmountAnalysis,
