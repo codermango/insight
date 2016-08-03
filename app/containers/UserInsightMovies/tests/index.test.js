@@ -18,17 +18,11 @@ describe('<UserInsightMovies />', () => {
       error: false,
       data: false,
     });
-    const topPurchasedMovies = fromJS({
-      loading: false,
-      error: false,
-      data: false,
-    });
     const renderedComponent = shallow(
       <UserInsightMovies
         fetchUserInsightMovies={fetchUserInsightMovies}
         contentViews={contentViews}
         topMovies={topMovies}
-        topPurchasedMovies={topPurchasedMovies}
       />
     );
     expect(renderedComponent.find(UserInsightMovies)).toExist();

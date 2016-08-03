@@ -21,11 +21,6 @@ describe('userInsightPageReducer', () => {
         data: false,
         error: false,
       }),
-      topPurchasedMovies: fromJS({
-        loading: false,
-        data: false,
-        error: false,
-      }),
       completeness: fromJS({
         loading: false,
         data: false,
