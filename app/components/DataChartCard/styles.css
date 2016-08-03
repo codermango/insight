@@ -1,0 +1,45 @@
+.dataChartCard {
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  background-color: #2A3B4C;
+}
+
+.title {
+  color: #4A8192;
+  align-self: flex-start;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: 1vw;
+  font-weight: 800;
+}
+
+.item {
+  text-align: right;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 0.619vw;
+}
+
+.chartSection {
+  position: relative;
+  height: 100%;
+  padding: 10px 0 0 30px;
+}
+
+.highlight {
+  text-align: center;
+  position: absolute;
+  bottom: 20%;
+  right: 17%;
+}
+
+.highlightTitle {
+  font-size: 0.9vw;
+}
+
+.highlightValue {
+  font-size: 0.7vw;
+}
