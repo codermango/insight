@@ -1,0 +1,19 @@
+.donutComponent {
+  position: relative;
+  height: 100%;
+}
+
+.highlight {
+  text-align: center;
+  position: absolute;
+  bottom: 25%;
+  right: 21%;
+}
+
+.highlightTitle {
+  font-size: 0.9vw;
+}
+
+.highlightValue {
+  font-size: 0.7vw;
+}

@@ -1,18 +1,18 @@
 import expect from 'expect';
 import {
-  fetchAnalysis,
+  fetchDashboard,
 } from '../actions';
 import {
-  FETCH_ANALYSIS,
+  FETCH_DASHBOARD,
 } from '../constants';
 
 describe('AnalysisPage actions', () => {
-  describe('fetchAnalysis', () => {
-    it('has a type of FETCH_ANALYSIS', () => {
+  describe('fetchDashboard', () => {
+    it('has a type of FETCH_DASHBOARD', () => {
       const expected = {
-        type: FETCH_ANALYSIS,
+        type: FETCH_DASHBOARD,
       };
-      expect(fetchAnalysis()).toEqual(expected);
+      expect(fetchDashboard()).toEqual(expected);
     });
   });
 });

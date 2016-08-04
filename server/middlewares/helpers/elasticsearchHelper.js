@@ -154,98 +154,58 @@ const timeTransactions = (query, index, cb) => {
   });
 };
 
-const activeviewersAnalysis = (query, index, cb) => {
+const dashboardData = (query, index, cb) => {
   client.search({
     index,
     body: query,
   }).then((resp) => {
-    const buckets = resp.aggregations.content.buckets.slice(-3, -1);
-    const previousValue = buckets[0].num_of_active_users.value;
-    const currentValue = buckets[1].num_of_active_users.value;
-    const change = (currentValue - previousValue) / previousValue * 100;
+    const { kpiValues, personaValues } = resp.hits.hits[0]._source;
+    const kpi = [
+      {
+        title: 'Active Viewers',
+        number: kpiValues.activeViewersPerWeek.lastWeek,
+        change: (kpiValues.activeViewersPerWeek.lastWeek - kpiValues.activeViewersPerWeek.secondLastWeek) / kpiValues.activeViewersPerWeek.lastWeek * 100,
+      },
+      {
+        title: 'Churn',
+        number: kpiValues.churnRatePerWeek.lastWeek,
+        change: (kpiValues.churnRatePerWeek.lastWeek - kpiValues.churnRatePerWeek.secondLastWeek) / kpiValues.churnRatePerWeek.lastWeek * 100,
+      },
+      {
+        title: 'AVG View Time',
+        number: kpiValues.averageViewingTimeSecPerWeek.lastWeek,
+        change: (kpiValues.averageViewingTimeSecPerWeek.lastWeek - kpiValues.averageViewingTimeSecPerWeek.secondLastWeek) / kpiValues.averageViewingTimeSecPerWeek.lastWeek * 100,
+      },
+      { title: 'ARPU', number: 37, change: 7 }, // fake
+      {
+        title: 'Top device',
+        data: [
+          { x: 'iPad', y: 345 },
+          { x: 'iPhone', y: 1232 },
+          { x: 'Samsung Smart TV', y: 423 },
+          { x: 'PC & Mac', y: 254 },
+          { x: 'Android', y: 112 },
+        ],
+      },
+    ];
+
+    const sumUsers = personaValues.reduce((preValue, item) => preValue + item.userNumber, 0);
+
+    const personas = personaValues.map(item => ({
+      persona: item.persona,
+      size: item.userNumber / sumUsers,
+      arpu: { data: 67.5, change: 12.3 }, // fake
+      avgViewingTime: { data: item.avgViewingTime, change: 12 },
+      device: 'iPad',
+    }));
     const dataFix = {
-      pre_value: previousValue,
-      cur_value: currentValue,
-      change_rate: Number(change.toFixed(2)),
+      kpi,
+      personas,
     };
+
     cb(dataFix);
   });
 };
-
-
-const churnAnalysis = (query, index, cb) => {
-  client.search({
-    index,
-    body: query,
-  }).then((resp) => {
-    const buckets = resp.aggregations.content.buckets.slice(-3, -1);
-    const previousValue = buckets[0].num_of_current_lose_user.value / buckets[0].num_of_current_active_user.value * 100;
-    const currentValue = buckets[1].num_of_current_lose_user.value / buckets[1].num_of_current_active_user.value * 100;
-    const change = (currentValue - previousValue) / previousValue * 100;
-    const dataFix = {
-      pre_value: previousValue,
-      cur_value: currentValue,
-      change_rate: Number(change.toFixed(2)),
-    };
-    cb(dataFix);
-  });
-};
-
-
-const averageAmountAnalysis = (query, index, cb) => {
-  client.search({
-    index,
-    body: query,
-  }).then((resp) => {
-    const buckets = resp.aggregations.content.buckets.slice(-3, -1);
-    const previousValue = buckets[0].num_of_interactions.value;
-    const currentValue = buckets[1].num_of_interactions.value;
-    const change = (currentValue - previousValue) / previousValue * 100;
-    const dataFix = {
-      pre_value: previousValue,
-      cur_value: currentValue,
-      change_rate: Number(change.toFixed(2)),
-    };
-    cb(dataFix);
-  });
-};
-
-
-const averageViewTimeAnalysis = (query, index, cb) => {
-  client.search({
-    index,
-    body: query,
-  }).then((resp) => {
-    const buckets = resp.aggregations.content.buckets.slice(-3, -1);
-    const previousValue = buckets[0].current_value.value / 60;
-    const currentValue = buckets[1].current_value.value / 60;
-    const change = (currentValue - previousValue) / previousValue * 100;
-    const dataFix = {
-      pre_value: previousValue,
-      cur_value: currentValue,
-      change_rate: Number(change.toFixed(2)),
-    };
-    cb(dataFix);
-  });
-};
-
-
-const personasActiveViewersAnalysis = (query, index, cb) => {
-  client.search({
-    index,
-    body: query,
-  }).then((resp) => {
-    const buckets = resp.aggregations.content.buckets.slice(-2, -1);
-    const personasBuckets = buckets[0].content.buckets;
-    const sum = personasBuckets.map(item => item.data.value).reduce((x, y) => x + y, 0);
-    const dataFix = {};
-    for (const item of personasBuckets) {
-      dataFix[`persona${item.key}`] = Number((item.data.value / sum * 100).toFixed(2));
-    }
-    cb(dataFix);
-  });
-};
-
 
 module.exports = {
   contentViews,
@@ -254,9 +214,5 @@ module.exports = {
   timeTransactions,
   aggsQuery,
   aggsChildQuery,
-  activeviewersAnalysis,
-  churnAnalysis,
-  averageAmountAnalysis,
-  averageViewTimeAnalysis,
-  personasActiveViewersAnalysis,
+  dashboardData,
 };

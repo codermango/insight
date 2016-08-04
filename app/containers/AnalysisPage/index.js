@@ -7,15 +7,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  selectActiveViewers,
-  selectChurn,
-  selectAverageAmount,
-  selectAverageViewTime,
-  selectPersonasActiveViewers,
+  // selectDashboardData,
 } from './selectors';
 import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
-import { fetchAnalysis } from './actions';
+import { fetchDashboard } from './actions';
 
 import KpiPanel from 'components/KpiPanel';
 import PersonasPanel from 'components/PersonasPanel';
@@ -38,57 +34,27 @@ import unhappySmiley from './images/unhappy_smiley.png';
 
 export class AnalysisPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
-  static propTypes = {
-    fetchAnalysis: React.PropTypes.func,
-    activeViewers: React.PropTypes.oneOfType([
-      React.PropTypes.object,
-      React.PropTypes.bool,
-    ]),
-    churn: React.PropTypes.oneOfType([
-      React.PropTypes.object,
-      React.PropTypes.bool,
-    ]),
-    averageAmount: React.PropTypes.oneOfType([
-      React.PropTypes.object,
-      React.PropTypes.bool,
-    ]),
-    averageViewTime: React.PropTypes.oneOfType([
-      React.PropTypes.object,
-      React.PropTypes.bool,
-    ]),
-    personasActiveViewers: React.PropTypes.oneOfType([
-      React.PropTypes.object,
-      React.PropTypes.bool,
-    ]),
-  };
-
-  componentWillMount() {
-    if (!this.props.activeViewers.get('data')) {
-      this.props.fetchAnalysis();
-    }
-  }
-  render() {
-    const {
-      activeViewers,
-      churn,
-      averageViewTime,
-      personasActiveViewers,
-    } = this.props;
-    if (!activeViewers.get('data')) {
-      return <div></div>;
-    }
-
-    const data = {
+  static defaultProps = {
+    dashboardData: {
       kpi: [
-        { title: 'Active Viewers', number: activeViewers.get('data').cur_value, change: activeViewers.get('data').change_rate },
-        { title: 'Churn', number: churn.get('data').cur_value, change: churn.get('data').change_rate },
+        { title: 'Active Viewers', number: 54545, change: 34.3 },
+        { title: 'Churn', number: 12, change: 43.3 },
         { title: 'ARPU', number: 37, change: 7 },
-        { title: 'Avg View Time', number: averageViewTime.get('data').cur_value, change: averageViewTime.get('data').change_rate },
-        { title: 'Top device', number: 37, change: 7 },
+        { title: 'Avg View Time', number: 234, change: -34 },
+        {
+          title: 'Top device',
+          data: [
+            { x: 'iPad', y: 345 },
+            { x: 'iPhone', y: 1232 },
+            { x: 'Samsung Smart TV', y: 423 },
+            { x: 'PC & Mac', y: 254 },
+            { x: 'Android', y: 112 },
+          ],
+        },
       ],
       personas: [
         {
-          percentage: personasActiveViewers.get('data').persona0,
+          percentage: 34,
           status: `${happySmiley}`,
           arpu: { data: 12.5, change: 12.3 },
           avgViewingTime: { data: 54.5, change: -9.8 },
@@ -97,7 +63,7 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
         },
 
         {
-          percentage: personasActiveViewers.get('data').persona1,
+          percentage: 23,
           status: `${happySmiley}`,
           arpu: { data: 67.5, change: 12.3 },
           avgViewingTime: { data: 54.5, change: -9.8 },
@@ -106,7 +72,7 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
         },
 
         {
-          percentage: personasActiveViewers.get('data').persona2,
+          percentage: 56,
           status: `${unhappySmiley}`,
           arpu: { data: 27.5, change: -52.3 },
           avgViewingTime: { data: 54.5, change: -9.8 },
@@ -115,22 +81,37 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
         },
 
         {
-          percentage: personasActiveViewers.get('data').persona3,
+          percentage: 12,
           status: `${happySmiley}`,
           arpu: { data: 29.5, change: 43.3 },
           avgViewingTime: { data: 12.9, change: -9.8 },
           posters: [`${poster10}`, `${poster11}`, `${poster12}`],
           description: 'Mainstream action and adventure, late night movie watchers. Prefer device Arris VIP 1113',
         },
-
       ],
-    };
+    },
+  };
 
-    const { kpi, personas } = data;
+
+  static propTypes = {
+    dashboardData: React.PropTypes.object,
+  };
+
+  // componentWillMount() {
+  //   if (!this.props.dashboardData.get('data')) {
+  //     this.props.fetchDashboard();
+  //   }
+  // }
+  render() {
+    const { dashboardData } = this.props;
+    // if (!dashboardData.kpi) {
+    //   return <div></div>;
+    // }
+
     return (
       <div className={styles.analysisPage}>
-        <KpiPanel data={kpi} />
-        <PersonasPanel data={personas} />
+        <KpiPanel data={dashboardData.kpi} />
+        <PersonasPanel data={dashboardData.personas} />
       </div>
     );
   }
@@ -138,16 +119,12 @@ export class AnalysisPage extends React.Component { // eslint-disable-line react
 
 
 const mapStateToProps = createStructuredSelector({
-  activeViewers: selectActiveViewers(),
-  churn: selectChurn(),
-  averageAmount: selectAverageAmount(),
-  averageViewTime: selectAverageViewTime(),
-  personasActiveViewers: selectPersonasActiveViewers(),
+  // dashboardData: selectDashboardData(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchAnalysis: () => dispatch(fetchAnalysis()),
+    fetchDashboard: () => dispatch(fetchDashboard()),
     dispatch,
   };
 }

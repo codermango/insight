@@ -9,6 +9,7 @@ describe('<DataCard />', () => {
     const data = {
       title: 'Active Users',
       number: 342434,
+      change: 12,
     };
     const renderedComponent = shallow(<DataCard data={data} />);
     expect(renderedComponent.find(DataCard)).toExist();

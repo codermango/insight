@@ -12,6 +12,7 @@
 .number {
   align-self: flex-end;
   font-size: 2vw;
+  margin-bottom: -25px;
 }
 
 .description {

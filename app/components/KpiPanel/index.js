@@ -19,7 +19,7 @@ function KpiPanel(props) {
       <DataCard data={data[1]} unit="%" isReverseColor={Boolean(true)} />
       <DataCard data={data[2]} unit="SEK" />
       <DataCard data={data[3]} unit="MIN" />
-      <DataChartCard />
+      <DataChartCard data={data[4]} />
     </div>
   );
 }

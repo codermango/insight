@@ -18,7 +18,7 @@ function DataCard(props) {
   } else {
     descriptionColor = data.change > 0 ? '#C41B10' : '#039800';
   }
-  const description = data.change > 0 ? `INCREASE +${data.change}%` : `DECREASE -${Math.abs(data.change)}%`;
+  const description = data.change > 0 ? `INCREASE +${data.change.toFixed(2)}%` : `DECREASE ${data.change.toFixed(2)}%`;
   return (
     <div className={styles.dataCard}>
       <h4 className={styles.title}>{data.title}</h4>
